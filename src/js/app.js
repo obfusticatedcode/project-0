@@ -10,7 +10,12 @@ $(()=>{
   //an array to store the 24 pieces of checkers
   const pieces = [];
   //an array to store the squares
-  const squares = []; 
+  const squares = [];
+  //the player depending on whether it's player one or two
+  let player = null;
+  //set the king status to boolean false initially
+  let king = false;
+
   setupBoard();
 
 
@@ -27,6 +32,21 @@ $(()=>{
   }
 
   //PIECES
+  //the element in html and the position of the piece as ensure it's not a king
+  //depending on the position of the piece, we can tell whether it's player 1 or 2 piece
+  function piece(element, position){
+    //using this to give local vars a context
+    this.element = element;
+    this.position = position;
+    //this is not a king yet
+    this.king;
+  }
+
+  //turning a regular piece into a king
+  function kingMaker(){
+    this.element;
+    this.king = true;
+  }
 
 
 
