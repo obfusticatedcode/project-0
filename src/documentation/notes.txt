@@ -1,0 +1,82 @@
+First know the rules of the game.
+Rules
+
+There are several alternative sets of rules by which to play checkers, the ones used in this game are based on the rules for American checkers and British draughts.
+
+Object
+The object of the game is to take all your opponent's pieces or place him in a position where he or she can no longer make any moves.
+
+Turns
+Players shall take turns at starting the game. The visitor shall start the first game.
+
+Obligation to move
+A player has to move, a player who can no longer move loses.
+
+Moving pieces
+All pieces, men and kings, can move only diagonally. Pieces can only move to adjacent unoccupied black squares except when making a jump (see below). Men may only move and jump forwards while kings may move and jump forwards as well as backwards.
+
+Obligation to jump
+If one player's piece has the opposing player's piece as a diagonal neighbour and the square behind the opposing player's piece is unoccupied the player can make a jump and remove his opponent's piece from the board. If a player can make a jump such player has an obligation to make a jump. If after making a jump another jump is possible the player must jump again (with the exception of pieces that have just been crowned).
+
+Crowning
+Upon reaching the last row on the far side of the checkers board, the so-called king row, a piece is crowned and becomes a king. Being crowned ends the move, a crowned piece may not continue with a jump even if possible.
+
+Referee
+The referee will step in to determine the winner, if during 20 moves (10 by each player), only kings have changed position (i.e. no man has moved forward and no piece has been removed from the board), and there appear to be repeating movements. In such cases the referee will determine the winner according to who holds the strongest position. Kings being worth more and men closer to the king row being worth more than those further away. In the event that both parties are of equal strength the referee shall call a draw.
+
+Other rules
+There are several rules which will not be enforced during this game:
+A piece once touched has to be moved.
+If you do not make a jump when one is possible you lose your moved piece.
+A warning is issued after 5 minutes of inactivity if you do not make a move within the next minute you lose the game.
+
+PSEUDO
+/*
+Init
+1.Setup the board with pieces placed in the starting squares for player1 and player2
+  -load the game board by having a counter for the pieces
+  -pieces will be images, using .png or .gif or div circles format
+  -Add pieces to the initial squares
+  -Player 1 always starts ... in the ideal route....
+  -A reset button to bring the pieces to the starting squares.
+
+2. Check if the diagonal and if the next square is occupied,
+    check if it's a player2 piece or friendly in all directions.
+    If it's unoccupied and going forward towards the king row,
+    and it's clicked, then move into that adjacent square
+    and remove the piece from the initial square
+
+3. If it's a player2 piece, check if the next diagonal square in all directions
+  is occupied either by a player2 piece
+  or friendly piece
+  or it's the king row
+  or is within bounds
+  -If it not occupied, and the piece is player2's,
+  then player1 is obliged to jump into the unoccupied square and check
+  if the next diagonal square in all directions is occupied either by a player2 piece
+  or friendly piece
+  or it's the king row
+  or is within bounds
+
+  TAKING
+  -If a piece has been jumped/taken, then remove the image it from the board.
+4. Change player turns by removing player1 options/class to play and add player2 options/class
+
+5.If the piece reaches the king row, check if it's player2's king row and within bounds,
+  If it's player2's king row then crown.
+
+  KING
+6.If the piece is a king, then check the full length of the diagonals in all directions.
+  -looping through each square to check if it's empty or occupied by player2's piece.
+  -can go backwards as well within bounds.
+
+7.If there's player2's piece then move to the an unoccupied square which has been clicked.
+
+//OPTIONALS
+1. Have a timer for each move
+
+
+
+
+
+*/

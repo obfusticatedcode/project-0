@@ -1,12 +1,45 @@
 body{
-  background-color: green;
+  background-color: LightCyan;
+  text-align: center;
+
 }
 
-//heroku create
-// touch index.php in terminal
-// <?php include_once('index.html') ?>
-// git add .
-// git commit -m "Adding index.php file"
-//git push heroku master
-// heroku open
-//git push origin master
+h1{
+  font-size: 48px;
+  font-weight: 400;
+}
+
+footer{
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+#checkers-board{
+    width:640px;
+    height:640px;
+    border:1px solid black;
+    margin: 50px;
+    position: relative;
+
+}
+
+div{
+ width:80px;
+ height:80px;
+ float:left;
+
+}
+
+.row1 {
+  border: 1px solid LightGray;
+}
+
+
+
+.black {
+  background: grey;
+}
+
+.white {
+  background: white;
+}
