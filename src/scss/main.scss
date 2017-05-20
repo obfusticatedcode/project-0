@@ -1,3 +1,11 @@
+// VARIABLES
+$red: #cc0000;
+
+@@mixin checkersPiece {
+  background-color: $red; 
+}
+
+
 body{
   background-color: LightCyan;
   text-align: center;

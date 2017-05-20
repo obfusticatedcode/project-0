@@ -15,9 +15,27 @@ $(()=>{
   let player = null;
   //set the king status to boolean false initially
   let king = false;
+  //the checkersBoard multidimensional array with piece postions to simulate the real world game board
+  const checkersBoard =
+    [
+    [  0,  1,  0,  1,  0,  1,  0,  1 ],
+    [  1,  0,  1,  0,  1,  0,  1,  0 ],
+    [  0,  1,  0,  1,  0,  1,  0,  1 ],
+    [  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [  0,  0,  0,  0,  0,  0,  0,  0 ],
+    [  2,  0,  2,  0,  2,  0,  2,  0 ],
+    [  0,  2,  0,  2,  0,  2,  0,  2 ],
+    [  2,  0,  2,  0,  2,  0,  2,  0 ]
+    ];
+
 
   setupBoard();
 
+  for (let row in checkersBoard) {
+    for (let column in checkersBoard[row]) {
+      console.log(row);
+    }
+  }
 
 
   //CHECKERS BOARD
@@ -26,7 +44,7 @@ $(()=>{
   // creating the checkers-board by looping through and adding divs
   function setupBoard(){
     for(let i =0; i < 64; i++) {
-      const color = parseInt((i / 8) + i) % 2 === 0 ? 'black' : 'white';
+      const color = parseInt((i / 8) + i) % 2 === 0 ? 'white' : 'black';
       $checkersBoard.append(`<div class='square ${color}' id='${i}'></div>`);
     }
   }
@@ -36,16 +54,26 @@ $(()=>{
   //depending on the position of the piece, we can tell whether it's player 1 or 2 piece
   function piece(element, position){
     //using this to give local vars a context
+    //element is the the div linked to the DOM
     this.element = element;
+    // the postions are represented by the multidimensional array as row and column format
     this.position = position;
-    //this is not a king yet
+    //this is not a king yet as king is default to false
     this.king;
   }
 
   //turning a regular piece into a king
   function kingMaker(){
+    //element is the the div linked to the DOM
     this.element;
+    // set king to true
     this.king = true;
+  }
+
+  // We use the Pythagoras Theorem to derive a formula for
+  // finding the distance between two points in 2- and 3- dimensional space.
+  function distant(x1,x2,y1,y2){
+    return Math.sqrt(Math.pow((x1-x2),2)+ Math.pow((y1-y2),2));
   }
 
 
