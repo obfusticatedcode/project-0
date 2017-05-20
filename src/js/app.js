@@ -2,11 +2,13 @@
 //load up jQuery
 $(()=>{
   //check if jQuery is working by console logging
-  console.log('clicked');
+  console.log('clicked and jQuery is working');
 
   //VARIABLES
   // grabbing the board from DOM
   const $checkersBoard = $('#checkers-board');
+  const $squareOnBoard = $('.square');
+  const $player1Pieces = $('.player1-pieces');
   //an array to store the 24 pieces of checkers
   const pieces = [];
   //an array to store the squares
@@ -31,21 +33,61 @@ $(()=>{
 
   setupBoard();
 
-  for (let row in checkersBoard) {
-    for (let column in checkersBoard[row]) {
-      console.log(row);
-    }
-  }
+
 
 
   //CHECKERS BOARD
   //to the checkersBoard append a div with a class square and add a backgroundColor alternate
   //between black and white.
-  // creating the checkers-board by looping through and adding divs
+  // creating the checkers-board by looping through the multidimensional array and adding divs
   function setupBoard(){
-    for(let i =0; i < 64; i++) {
-      const color = parseInt((i / 8) + i) % 2 === 0 ? 'white' : 'black';
-      $checkersBoard.append(`<div class='square ${color}' id='${i}'></div>`);
+    let countSquares = 0;
+    for(let row =0; row < checkersBoard.length; row++) {
+      const rowArray = checkersBoard[row];
+      for (let column = 0; column < rowArray.length; column++) {
+
+        //if the row is odd and the colunm is even set a square
+        // const color = parseInt((column / 8) + column) % 2 === 0 ? 'white' : 'black';
+        // $checkersBoard.append(`<div class='square ${color}' id='${countSquares}'></div>`);
+        countSquares++;
+
+        console.log('test');
+        console.log(rowArray[column]);
+      }
+
+    }
+
+  }//end of setupBoard function
+
+
+
+  //SQUARES
+  function square(element, position){
+    //using this to give local vars a context
+    //element is the the div linked to the DOM
+    this.element = element;
+    // the postions are represented by the multidimensional array as row and column format
+    this.position = position;
+    //this is not a king yet as king is default to false
+    this.inRange(piece);
+  }
+
+  //DISTANCE
+  // We use the Pythagoras Theorem to derive a formula for
+  // finding the distance between two points in 2- and 3- dimensional space.
+  function distance(x1,x2,y1,y2){
+    return Math.sqrt(Math.pow((x1-x2),2)+ Math.pow((y1-y2),2));
+  }
+
+  //RANGE
+  function inRange(piece){
+    if(distance(this.position[0],this.position[1],
+                this.position[0],this.position[1]) === Math.sqrt(2)){
+      return 'normal-move'; //normal move
+    }else if(distance(this.position[0], this.position[1],
+                this.position[0],this.position[1]) === (Math.sqrt(2))*2){
+      return 'jump-move'; //jump move
+
     }
   }
 
@@ -70,11 +112,7 @@ $(()=>{
     this.king = true;
   }
 
-  // We use the Pythagoras Theorem to derive a formula for
-  // finding the distance between two points in 2- and 3- dimensional space.
-  function distant(x1,x2,y1,y2){
-    return Math.sqrt(Math.pow((x1-x2),2)+ Math.pow((y1-y2),2));
-  }
+
 
 
 

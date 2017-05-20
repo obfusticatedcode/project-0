@@ -1,10 +1,17 @@
 // VARIABLES
 $red: #cc0000;
 
-@@mixin checkersPiece {
-  background-color: $red; 
+
+@mixin checkers-piece-mixin {
+  background-color: $red;
+  display: inline-block;
+  // background-size: 65%;
+  border-radius: 50%;
 }
 
+.checkers-piece{
+  @include checkers-piece-mixin;
+}
 
 body{
   background-color: LightCyan;
