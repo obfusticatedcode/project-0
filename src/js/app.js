@@ -33,68 +33,76 @@ $(()=>{
   let countSquares = 0;
   let countPieces = 0;
 //array with view port conversion with top and left
-//Viewport Minimum (vmin) — This unit is based on the smaller dimension of the viewport. If the viewport height is smaller than the width, the value of 1vmin will be equal to 1% of the viewport height. Similarly, if the viewport width is smaller than the height, the value of 1vmin will be equal to 1% of the viewport width.
+//Viewport Minimum (vmin) — This unit is based on
+//the smaller dimension of the viewport.
+//If the viewport height is smaller than the width,
+//the value of 1vmin will be equal to 1% of the viewport height.
+//Similarly, if the viewport width is smaller than the height, the value of 1vmin will be equal to 1% of the viewport width.
   const viewportConversion = ['0vmin','10vmin','20vmin','30vmin','40vmin','50vmin','60vmin','70vmin'];
-//loop through the array called checkersBoard indexed at 0
-  for (let row = 0; row < checkersBoard.length; row++) {
-    checkersBoard[row];
-    //test the rows index is working
-    // console.log(row);//passed. output is 0,1,2,3,4,6,7
-    //loop through the array elements or columns
 
+  //call the SETUP function/method to create the board and add pieces
+  setup();
 
+  function setup(){
+    //loop through the array called checkersBoard indexed at 0
+    for (let row = 0; row < checkersBoard.length; row++) {
+      checkersBoard[row];
+        //test the rows index is working
+        // console.log(row);//passed. output is 0,1,2,3,4,6,7
+        //loop through the array elements or columns
 
-    for (let column = 0; column < checkersBoard[row].length; column++) {
-      checkersBoard[row][column];
-    //test the column index is being looped through
-      // console.log(column);//passed. output is 0,1,2,3,4,6,7 foreach column
+      for (let column = 0; column < checkersBoard[row].length; column++) {
+        checkersBoard[row][column];
+        //test the column index is being looped through
+          // console.log(column);//passed. output is 0,1,2,3,4,6,7 foreach column
 
-    //if the row is odd and the column even add a square
-      if(row % 2 === 1 && column % 2 === 0 ){
-        //test the row is correct-odd
-        // console.log(row);//pass. output is 1,3,5,7
-          //test the column is correct-even
-          // console.log(column);//passed. output is 0,2,4,6
-          //append a div representing a square to the $squaresOnBoard div with class
-        $squaresOnBoard.append(`<div class='square' id='square${countSquares}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}'></div>`);
-          //create a new squareObject and add the number of squares count to the squares counters
-          //use the element id and position as arguments to create the squares
-        squares[countSquares] = new square($('#squares'+countSquares), [parseInt(row), parseInt(column)]);
-        countSquares++;
-          // //test the countSquares works
-          // console.log(countSquares);//passed. output is 1 to 16 index based is 0 to 15
-      }else if(row % 2 === 0 && column % 2 === 1) {//otherwise if row is even.
-        //test the column is correct-odd
-        // console.log(column);//passed. output is 1,3,5,7
-        $squaresOnBoard.append(`<div class='square' id='square${countSquares}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}'></div>`);
-        squares[countSquares] = new square($('#square'+countSquares), [parseInt(row), parseInt(column)]);
-          // console.log(`id='square${countSquares}`);
-        countSquares++;
+        //if the row is odd and the column even add a square
+        if(row % 2 === 1 && column % 2 === 0 ){
+            //test the row is correct-odd
+            // console.log(row);//pass. output is 1,3,5,7
+              //test the column is correct-even
+              // console.log(column);//passed. output is 0,2,4,6
+              //append a div representing a square to the $squaresOnBoard div with class
+          $squaresOnBoard.append(`<div class='square' id='square${countSquares}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}'></div>`);
+              //create a new squareObject and add the number of squares count to the squares counters
+              //use the element id and position as arguments to create the squares
+          squares[countSquares] = new square($('#squares'+countSquares), [parseInt(row), parseInt(column)]);
+          countSquares++;
+              // //test the countSquares works
+              // console.log(countSquares);//passed. output is 1 to 16 index based is 0 to 15
+        }else if(row % 2 === 0 && column % 2 === 1) {//otherwise if row is even.
+            //test the column is correct-odd
+            // console.log(column);//passed. output is 1,3,5,7
+          $squaresOnBoard.append(`<div class='square' id='square${countSquares}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}'></div>`);
+          squares[countSquares] = new square($('#square'+countSquares), [parseInt(row), parseInt(column)]);
+              // console.log(`id='square${countSquares}`);
+          countSquares++;
 
-      }//end of else statement
+        }//end of else statement
 
-        //add the pieces to the checkersBoard
-      if(checkersBoard[row][column] === 1) {
-        $player1Pieces.append(`<div class='player1-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
-        pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
-        countPieces++;
-        //test value of checkersBoard[row][column]
-        console.log(`checkersBoard row is: ${checkersBoard[row]} `);
-        console.log(`checkersBoard column is: ${checkersBoard[column]} `);
-        console.log(`checkersBoard row and column is: ${checkersBoard[row][column]}`);//passed.output is 1
-      }else if(checkersBoard[row][column] === 2) {
-        $player2Pieces.append(`<div class='player2-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
-        pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
-        countPieces++;
-        //test value of checkersBoard[row][column]
-        console.log(`checkersBoard row is: ${checkersBoard[row]} `);
-        console.log(`checkersBoard column is: ${checkersBoard[column]} `);
-        console.log(`checkersBoard 2 row and column is: ${checkersBoard[row][column]}`);//passed. output is 2
-      }
+            //add the pieces to the checkersBoard
+        if(checkersBoard[row][column] === 1) {
+          $player1Pieces.append(`<div class='player1-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
+          pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
+          countPieces++;
+            //test value of checkersBoard[row][column]
+          console.log(`checkersBoard row is: ${checkersBoard[row]} `);
+          console.log(`checkersBoard column is: ${checkersBoard[column]} `);
+          console.log(`checkersBoard row and column is: ${checkersBoard[row][column]}`);//passed.output is 1
+        }else if(checkersBoard[row][column] === 2) {
+          $player2Pieces.append(`<div class='player2-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
+          pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
+          countPieces++;
+            //test value of checkersBoard[row][column]
+          console.log(`checkersBoard row is: ${checkersBoard[row]} `);
+          console.log(`checkersBoard column is: ${checkersBoard[column]} `);
+          console.log(`checkersBoard 2 row and column is: ${checkersBoard[row][column]}`);//passed. output is 2
+        }
 
+      }//end of inner for loop
+    }//end of outter for loop
+  }//end of setup function
 
-    }//end of inner for loop
-  }//end of outter for loop
 
 
  //create a square object to attach to the checkersBoard
