@@ -7,8 +7,8 @@ $(()=>{
 //grab DOM elements
   const $checkersBoard = $('#checkers-board');
   const $squaresOnBoard = $('.squares');
-  const $player1Pieces =$('.player1-pieces');
-  const $player2Pieces =$('.player2-pieces');
+  const $player1Pieces =$('#player1');
+  const $player2Pieces =$('#player2');
 //test dom elements are working
   console.log(`${$checkersBoard} `);//output is object Object
 
@@ -75,7 +75,7 @@ $(()=>{
 
         //add the pieces to the checkersBoard
       if(checkersBoard[row][column] === 1) {
-        $player1Pieces.append(`<div class='checkers-piece' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}';'></div>`);
+        $player1Pieces.append(`<div class='player1-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
         pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
         countPieces++;
         //test value of checkersBoard[row][column]
@@ -83,7 +83,7 @@ $(()=>{
         console.log(`checkersBoard column is: ${checkersBoard[column]} `);
         console.log(`checkersBoard row and column is: ${checkersBoard[row][column]}`);//passed.output is 1
       }else if(checkersBoard[row][column] === 2) {
-        $player2Pieces.append(`<div class='checkers-piece' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}';'></div>`);
+        $player2Pieces.append(`<div class='player2-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
         pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
         countPieces++;
         //test value of checkersBoard[row][column]
