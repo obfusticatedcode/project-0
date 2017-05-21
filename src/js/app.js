@@ -7,8 +7,10 @@ $(()=>{
 //grab DOM elements
   const $checkersBoard = $('#checkers-board');
   const $squaresOnBoard = $('.squares');
+  const $pieces = $('.pieces');
   const $player1Pieces =$('#player1');
   const $player2Pieces =$('#player2');
+
 //TEST dom elements are working
   console.log(`${$checkersBoard} `);//output is object Object
 
@@ -29,6 +31,11 @@ $(()=>{
 //incremental arrays
   const pieces = [];
   const squares = [];
+//players
+  const player1 = 1;
+  const player2 = 2;
+//players turn
+  let playerTurn = null;
 //counters
   let countSquares = 0;
   let countPieces = 0;
@@ -44,6 +51,8 @@ $(()=>{
   setup();
 
   function setup(){
+    //player 1 always starts
+    playerTurn === player1;
     //loop through the array called checkersBoard indexed at 0
     for (let row = 0; row < checkersBoard.length; row++) {
       checkersBoard[row];
@@ -81,7 +90,7 @@ $(()=>{
         }//end of else statement
 
             //add the pieces to the checkersBoard
-        if(checkersBoard[row][column] === 1) {
+        if(checkersBoard[row][column] === player1) {
           $player1Pieces.append(`<div class='player1-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
           pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
           countPieces++;
@@ -89,7 +98,7 @@ $(()=>{
           // console.log(`checkersBoard row is: ${checkersBoard[row]} `);
           // console.log(`checkersBoard column is: ${checkersBoard[column]} `);
           // console.log(`checkersBoard row and column is: ${checkersBoard[row][column]}`);//passed.output is 1
-        }else if(checkersBoard[row][column] === 2) {
+        }else if(checkersBoard[row][column] === player2) {
           $player2Pieces.append(`<div class='player2-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
           pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
           countPieces++;
@@ -163,9 +172,35 @@ $(()=>{
     this.player = '';
     //figure out player by piece id
     if(this.element < 12)
-      this.player = 1;
+      this.player1;
     else
-      this.player = 2;
+      this.player2;
   }
+
+  // CLICK EVENTS
+  $squaresOnBoard.on('click',()=>{
+    //TEST the click event works.
+    console.log(`click events works on the squares!`);
+  });
+
+  //SELECTING PIECES
+  $pieces.on('click',()=>{
+    //TEST the click event works.
+    console.log(`click events works on the pieces!`);
+
+    let selected = null;
+    const itsPlayersTurn = ($(this).parent().attr('class').
+    split(' ')[0] === 'player'+checkersBoard.playerTurn+'pieces');
+    if(itsPlayersTurn) {
+      if($(this).hasClass('selected')) selected = true;
+      $('.piece').each(function(index) {
+        $('.piece').eq(index).removeClass('selected');
+      });
+      if(!selected) {
+        $(this).addClass('selected');
+      }
+    }
+
+  });
 
 });//end of jQuery load
