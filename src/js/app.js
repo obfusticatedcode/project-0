@@ -81,18 +81,19 @@ $(()=>{
       if(checkersBoard[row][column] === 1) {
         $player1Pieces.append(`<div class='checkers-piece' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}';'></div>`);
         pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
-        countPieces += 1;
+        countPieces++;
         //test value of checkersBoard[row][column]
         console.log(`checkersBoard row is: ${checkersBoard[row]} `);
         console.log(`checkersBoard column is: ${checkersBoard[column]} `);
-        console.log(`checkersBoard row and column is: ${checkersBoard[row][column]} `);
+        console.log(`checkersBoard row and column is: ${checkersBoard[row][column]}`);//passed.output is 1
       }else if(checkersBoard[row][column] === 2) {
         $player2Pieces.append(`<div class='checkers-piece' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}';'></div>`);
         pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
-        countPieces += 1;
+        countPieces++;
         //test value of checkersBoard[row][column]
         console.log(`checkersBoard row is: ${checkersBoard[row]} `);
         console.log(`checkersBoard column is: ${checkersBoard[column]} `);
+        console.log(`checkersBoard 2 row and column is: ${checkersBoard[row][column]}`);//passed. output is 2
       }
 
 
@@ -140,6 +141,7 @@ $(()=>{
     this.position = position;
     //test the position
     console.log(`The piece position is: ${position}`);
+
     //who's piece is it, player place holder
     this.player = '';
     //figure out player by piece id
