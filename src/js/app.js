@@ -12,12 +12,12 @@ $(()=>{
   const $player1 =$('#player1');
   //player2 piece class
   const $player2 =$('#player2');
-  //player1 pieces
-  const $player1Pieces =$('.player1-pieces');
+  let $player1Pieces = undefined;
   //player2 pieces
-  const $player2Pieces =$('.player2-pieces');
+  let $player2Pieces = undefined;
   //the selected class
   const $selected =$('#checkers-board .pieces .player1 .selected');
+
 
 //TEST dom elements are working
   console.log(`${$checkersBoard} `);//output is object Object
@@ -120,6 +120,11 @@ $(()=>{
     }//end of outter for loop
   }//end of setup function
 
+  //player1 pieces grabbing these here after they've been generated declare at the top.
+  $player1Pieces =$('.player1-pieces');
+  //player2 pieces
+  $player2Pieces =$('.player2-pieces');
+
   //SQUARE is empty
   function squareIsEmpty(row, column){
     //TEST row and column
@@ -195,17 +200,31 @@ $(()=>{
   $pieces.on('click',()=>{
     //TEST the click event works.
     console.log(`click events works on the pieces!`);
-    $player1Pieces.addClass('selected');
+    // $player2Pieces.toggleClass('selected');
+    //TEST to see the id on the pieces, will use this to select each one.
     console.log($player1Pieces);
-    // let selected = null;
+
+  });
+
+
+
+  $player1Pieces.on('click', ()=>{
+    console.log(`clicking player1 pieces works!`);
+    $player1Pieces.toggleClass('selected');
+
+    // let selected = false;
     // if($(this).hasClass('selected')){
     //   selected = true;
-    //   $pieces.each(function(index) {
-    //     $pieces.eq(index).removeClass('selected');
+    //   $player1Pieces.each(function(index) {
+    //     $player1Pieces.eq(index).removeClass('selected');
     //   });
     // } else if(!selected) {
     //   $(this).addClass('selected');
     // }
+  });
+
+  $player2Pieces.on('click', ()=>{
+    $player2Pieces.toggleClass('selected');
   });
 
 });//end of jQuery load
