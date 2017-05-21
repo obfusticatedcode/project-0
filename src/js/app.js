@@ -57,15 +57,11 @@ $(()=>{
           //test the column is correct-even
           // console.log(column);//passed. output is 0,2,4,6
           //append a div representing a square to the $squaresOnBoard div with class
-          console.log(`viewport row${row}`);
-          console.log(`viewport column ${column}`);
           $squaresOnBoard.append(`<div class='square' id='square${countSquares}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}'></div>`);
           //create a new squareObject and add the number of squares count to the squares counters
           //use the element id and position as arguments to create the squares
           squares[countSquares] = new square($('#squares'+countSquares), [parseInt(row), parseInt(column)]);
           countSquares++;
-          console.log(`view port row${row}`);
-          console.log(`view port column ${column}`);
           // //test the countSquares works
           // console.log(countSquares);//passed. output is 1 to 16 index based is 0 to 15
         }
@@ -80,16 +76,23 @@ $(()=>{
           countSquares++;
         }
       }//end of else statement
-      
+
         //add the pieces to the checkersBoard
       if(checkersBoard[row][column] === 1) {
         $player1Pieces.append(`<div class='checkers-piece' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}';'></div>`);
         pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
         countPieces += 1;
+        //test value of checkersBoard[row][column]
+        console.log(`checkersBoard row is: ${checkersBoard[row]} `);
+        console.log(`checkersBoard column is: ${checkersBoard[column]} `);
+        console.log(`checkersBoard row and column is: ${checkersBoard[row][column]} `);
       }else if(checkersBoard[row][column] === 2) {
         $player2Pieces.append(`<div class='checkers-piece' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]}';'></div>`);
         pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
         countPieces += 1;
+        //test value of checkersBoard[row][column]
+        console.log(`checkersBoard row is: ${checkersBoard[row]} `);
+        console.log(`checkersBoard column is: ${checkersBoard[column]} `);
       }
 
 
@@ -104,6 +107,8 @@ $(()=>{
     this.element = element;
     // the positions are represented by the multidimensional array as row and column format
     this.position = position;
+    //test the square position
+    console.log(`This squares' position is: ${position}`);
     //if square is in range from the piece
     this.inRange = function(piece) {
       if(distance(this.position[0], this.position[1], piece.position[0],
@@ -133,6 +138,8 @@ $(()=>{
     console.log(this.element);
     //positions on gameBoard array in format row, column
     this.position = position;
+    //test the position
+    console.log(`The piece position is: ${position}`);
     //who's piece is it, player place holder
     this.player = '';
     //figure out player by piece id
