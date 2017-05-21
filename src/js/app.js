@@ -8,8 +8,16 @@ $(()=>{
   const $checkersBoard = $('#checkers-board');
   const $squaresOnBoard = $('.squares');
   const $pieces = $('.pieces');
-  const $player1Pieces =$('#player1');
-  const $player2Pieces =$('#player2');
+  //player1 piece class
+  const $player1 =$('#player1');
+  //player2 piece class
+  const $player2 =$('#player2');
+  //player1 pieces
+  const $player1Pieces =$('.player1-pieces');
+  //player2 pieces
+  const $player2Pieces =$('.player2-pieces');
+  //the selected class
+  const $selected =$('#checkers-board .pieces .player1 .selected');
 
 //TEST dom elements are working
   console.log(`${$checkersBoard} `);//output is object Object
@@ -91,7 +99,7 @@ $(()=>{
 
             //add the pieces to the checkersBoard
         if(checkersBoard[row][column] === player1) {
-          $player1Pieces.append(`<div class='player1-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
+          $player1.append(`<div class='player1-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
           pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
           countPieces++;
             //TEST value of checkersBoard[row][column]
@@ -99,7 +107,7 @@ $(()=>{
           // console.log(`checkersBoard column is: ${checkersBoard[column]} `);
           // console.log(`checkersBoard row and column is: ${checkersBoard[row][column]}`);//passed.output is 1
         }else if(checkersBoard[row][column] === player2) {
-          $player2Pieces.append(`<div class='player2-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
+          $player2.append(`<div class='player2-pieces' id='${countPieces}' style='top:${viewportConversion[row]}; left:${viewportConversion[column]};'></div>`);
           pieces[countPieces] = new piece($('#'+countPieces), [parseInt(row), parseInt(column)]);
           countPieces++;
             //TEST value of checkersBoard[row][column]
@@ -187,20 +195,17 @@ $(()=>{
   $pieces.on('click',()=>{
     //TEST the click event works.
     console.log(`click events works on the pieces!`);
-
-    let selected = null;
-    const itsPlayersTurn = ($(this).parent().attr('class').
-    split(' ')[0] === 'player'+checkersBoard.playerTurn+'pieces');
-    if(itsPlayersTurn) {
-      if($(this).hasClass('selected')) selected = true;
-      $('.piece').each(function(index) {
-        $('.piece').eq(index).removeClass('selected');
-      });
-      if(!selected) {
-        $(this).addClass('selected');
-      }
-    }
-
+    $player1Pieces.addClass('selected');
+    console.log($player1Pieces);
+    // let selected = null;
+    // if($(this).hasClass('selected')){
+    //   selected = true;
+    //   $pieces.each(function(index) {
+    //     $pieces.eq(index).removeClass('selected');
+    //   });
+    // } else if(!selected) {
+    //   $(this).addClass('selected');
+    // }
   });
 
 });//end of jQuery load

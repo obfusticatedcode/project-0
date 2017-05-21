@@ -93,7 +93,7 @@ button {
       cursor: pointer;
       border: 1vmin solid #B93848; }
 
-#checkers-board .player1-pieces .piece.selected {
+.selected {
       box-shadow: 0 0 10px 5px #16A8C7; }
 
 #checkers-board .player2-pieces{
@@ -112,7 +112,7 @@ button {
       cursor: pointer;
       border: 1vmin solid #8b8bff; }
 
-#checkers-board .player2-pieces .piece.selected {
+#checkers-board .pieces .player2 .selected {
       box-shadow: 0 0 10px 5px #16A8C7; }
 
 .clearfix{
