@@ -1,53 +1,36 @@
+
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Checkers</title>
-    <!-- google fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Source+Code+Pro" rel="stylesheet">
-    <!-- page favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="public/images/checkers-favicon.ico">
-    <!-- link the jQuery -->
-    <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-    <!-- <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script> -->
-    <!-- link the js -->
-    <script src="public/js/app.js" charset="utf-8"></script>
-    <!-- link the scss -->
-    <link rel="stylesheet" href="public/css/main.css">
-  </head>
-  <body>
 
-    <!-- HEADER -->
-    <header>
-      <h1>Checkers</h1>
-    </header>
+<head>
+  <meta charset="utf-8">
+  <title>Checkers</title>
+  <!-- google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Source+Code+Pro" rel="stylesheet">
+  <!-- page favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="public/images/checkers-favicon.ico">
+  <!-- link the jQuery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <!-- link the js -->
+  <script src="public/js/app.js" charset="utf-8"></script>
+  <!-- link the scss -->
+  <link rel="stylesheet" href="public/css/main.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header id="meta">
+    <h1>Checkers</h1>
+    <h4>Moves: <span id="moveCount">0</span></h4>
+  </header>
+  <!--GAME-->
+  <main>
+    <div id="game">
+        <div id="board"></div>
+        <div id="pieces"></div>
+    </div>
+  </main>
 
-    <main>
-      <!-- GAME BOARD -->
-      <div id="checkers-board">
-        <!-- div for the board squares -->
-        <div class="squares"></div>
-        <!-- div for the pieces -->
-        <div class="pieces">
-          <!-- player1's pieces div -->
-          <div class="player1"></div>
-          <!-- player2's pieces div -->
-          <div class="player2"></div>
-        </div>
-      </div>
-      <!-- END OF GAME BOARD -->
-    </main>
-
-
-
-    <!-- FOOTER -->
-    <footer id="footer">
-      <!-- RESET -->
-      <button type="button" name="button" id="reset-button" >Reset</button>
-    </footer>
-
-  </body>
+  <!-- FOOTER -->
+  <footer></footer>
+</body>
 </html>

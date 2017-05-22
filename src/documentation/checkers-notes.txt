@@ -1,0 +1,6 @@
+//first plan the overall game
+//draw diagrams to represent ideas.
+//pseudo-code the game before writing code.
+//test everything, all that's added to the code base is tested
+//go through jQuery lessons
+//
