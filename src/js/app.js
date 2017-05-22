@@ -183,8 +183,12 @@ $(()=>{
   // FUNCTIONS
   function setUpPieces() {
       //select all the divs with class 'piece'
-      //add the 'light' class to half of them
-      //add the 'dark' to the other half
+    $('piece');
+//add the 'light' class to half of them
+    const  lightPieces = $('div.piece:even').addClass('light');
+//jQuery's even and odd selector methods to assign the classes .light and .dark.
+//add the 'dark' to the other half
+    const  darkPieces = $('div.piece:odd').addClass('dark'); 
 
   }
 
@@ -192,6 +196,8 @@ $(()=>{
       //set the css 'top' and 'left'
       //attributes of the passed piece
       //to the arguments newTop and newLeft
+    $piece.css('top', newTop);
+    $piece.css('left', newLeft);
 
   }
 
