@@ -9,14 +9,14 @@ $(()=>{
   const $squaresOnBoard = $('.squares');
   const $pieces = $('.pieces');
   //player1 piece class
-  const $player1 =$('#player1');
+  const $player1 =$('.player1');
   //player2 piece class
-  const $player2 =$('#player2');
-  let $player1Pieces = undefined;
+  const $player2 =$('.player2');
+  let $player1Pieces = undefined;//not yet generated
   //player2 pieces
-  let $player2Pieces = undefined;
+  let $player2Pieces = undefined;//not yet generated
   //the selected class
-  const $selected =$('#checkers-board .pieces .player1 .selected');
+  const $selected =$('#checkers-board .pieces .player1 .selected');//is this a dom element?
 
 
 //TEST dom elements are working
@@ -60,7 +60,7 @@ $(()=>{
 
   function setup(){
     //player 1 always starts
-    playerTurn === player1;
+    playerTurn = player1;
     //loop through the array called checkersBoard indexed at 0
     for (let row = 0; row < checkersBoard.length; row++) {
       checkersBoard[row];
@@ -148,7 +148,7 @@ $(()=>{
     // the positions are represented by the multidimensional array as row and column format
     this.position = position;
     //TEST the square position
-    console.log(`This squares' position is: ${position}`);
+    // console.log(`This squares' position is: ${position}`);
     //if square is in range from the piece
     this.inRange = function(piece) {
       if(distance(this.position[0], this.position[1], piece.position[0],
@@ -175,11 +175,11 @@ $(()=>{
     //using this to give local vars a context
     //element is the the div linked to the DOM
     this.element = element;
-    console.log(this.element);
+    // console.log(this.element);
     //positions on gameBoard array in format row, column
     this.position = position;
     //TEST the position
-    console.log(`The piece position is: ${position}`);
+    // console.log(`The piece position is: ${position}`);
 
     //who's piece is it, player place holder
     this.player = '';
@@ -202,25 +202,38 @@ $(()=>{
     console.log(`click events works on the pieces!`);
     // $player2Pieces.toggleClass('selected');
     //TEST to see the id on the pieces, will use this to select each one.
-    console.log($player1Pieces);
+    // console.log($player1Pieces);
+    console.log($(this).attr('class'));//pieces div has no id therefore returns undefined
+    const classn = $(this).parent().attr('class');
+    console.log(`This is a parent class name: ${classn}`);
+    // console.log(`This is a class name: ${classn}`);
+
+  });
+
+  // figuring out how to grab single piece
+  //TEST for grabbing id's
+  $player1.on('click',()=>{
+    console.log(`This is player 1 div and it's been clicked`);
+
+    console.log($(this).attr('id'));//id of the current div..output is undefined
+    // const id = event.target.id;
+    // console.log(id);
 
   });
 
 
 
-  $player1Pieces.on('click', ()=>{
-    console.log(`clicking player1 pieces works!`);
-    $player1Pieces.toggleClass('selected');
+  $player1Pieces.on('click', (e)=> {
+    $player1Pieces.removeClass('selected');
+    $(e.target).addClass('selected');
+    const $test = $('.player1');
+    $test.toggleClass('selected');
+    console.log(`Output of the test : ${$test}`);
 
-    // let selected = false;
-    // if($(this).hasClass('selected')){
-    //   selected = true;
-    //   $player1Pieces.each(function(index) {
-    //     $player1Pieces.eq(index).removeClass('selected');
-    //   });
-    // } else if(!selected) {
-    //   $(this).addClass('selected');
-    // }
+    // $player1Pieces.toggleClass('selected');
+    // const id = $(event.target);//using event.target  to get the child id.
+    // console.log(id.attr('id'));//passed. outputs the div id of the selected piece
+    // console.log($(this).attr('id'));//$player1Pieces div has no id therefore returns undefined
   });
 
   $player2Pieces.on('click', ()=>{

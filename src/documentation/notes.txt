@@ -81,7 +81,23 @@ Init
 
 */
 
+
+When binding a click event with jQuery, the passed argument is the click event. If console.log-ed it will reveal the DOM element inside the .target property. event.target is a DOM element. So you can get the id by using event.target.id or, to stick to jQuery methods, one should use .attr('id') on the jQuery wrapper around the DOM element: $(event.target).attr(id).
+
+
+
 rough code...
+
+let selected = false;
+if(id.hasClass('selected')){
+  selected = true;
+  $player1.each(function(index) {
+    $player1.eq(index).removeClass('selected');
+  });
+
+} else if(!selected) {
+  $(this).addClass('selected');
+}
 
 
 //load up jQuery
