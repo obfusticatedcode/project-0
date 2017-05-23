@@ -79,19 +79,39 @@ $(()=>{
   $('div.piece').on('click',(event)=>{
     //turn `this` into a jQuery object
     const $thisPiece = $(event.target);
+    //TEST. checking the piece index.
+    currentPosition();
+    // const position = $(event.target).position();
+    // const coords = getCoords(position.top,position.left);
+    // console.log(coords);//getting the location of the piece
+    // check if it's p1 or p2 by the color
+    if ($thisPiece.hasClass('dark')){
+      console.log($thisPiece);
+    }else {
+      console.log(`This is a light piece`);
+    }
 
-    //toggleing the 'selected' class of this piece
+
+
+    //toggling the 'selected' class of this piece
     //and possible deselecting other pieces
     toggleSelect($thisPiece);
 
   });
 
-
+  //checks the currentPosition of the clicked or selected div and returns the coords.
+  function currentPosition(){
+    const position = $(event.target).position();
+    const coords = getCoords(position.top,position.left);
+    console.log(coords);//getting the location of the piece
+    return coords;
+  }
 
   $('div.square').on('click', (e)=>{
 
     //turn `e or event` into a jQuery object
     const $pieceToMove = $(e.target);
+
 
     //if $this is a legal square to move to...
     if ($pieceToMove.hasClass('movable')) {
@@ -251,6 +271,8 @@ $(()=>{
   }
 
 
+
+
 });//end of JS load
 
 
@@ -260,6 +282,28 @@ TODO:
 2. Figure out how to stop illegal moves.
   -only make two postitions available at any given time
   -once the piece has moved into a position make
+
+  -On click of sqaure
+  -get piece on sqaure (e.target)
+  -check if piece belongs to p1 or p2
+  -check relevant squares
+    .if index of currentSquare
+    .if square is not in the first column
+    check square diagonally left and movable class if empty
+    .if square is not in the last column
+    check square diagonally right and movable class if empty
+  -once piece is moved or if un-selected remove movable class from all squares.
+
+index (position)% width === 0 ...represents the first column
+index % width === width-1 ...represents the last column
+
+index + width-1 for player1 is going left diagonally
+index + width-1 for player1 is going right diagonally
+
+index - width+1 for player2 is going left diagonally
+index - width-1 for player2 is going right diagonally
+
+
 3. Jump moves to make the opponents piece disappear from the board and reset
   the positon
 4. King maker function
