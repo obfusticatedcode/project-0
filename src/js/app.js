@@ -67,7 +67,7 @@ $(()=>{
 
     //set up initial squares the class 'movable' represents a square
     //that is unoccupied and this allows all squares dark squares to be movable
-  getMovableSquares().addClass('movable');
+  // getMovableSquares().addClass('movable');
 
       //EVENTS
 
@@ -79,13 +79,8 @@ $(()=>{
   $('div.piece').on('click',(event)=>{
     //turn `this` into a jQuery object
     const $thisPiece = $(event.target);
-    //TEST. checking the piece index.
-    currentPosition(); //represents x and y coords
-    let index = coords;
-    //getting the location of the piece
-    console.log(index);
-    const darkPiece = $thisPiece.hasClass('dark');
-    console.log(darkPiece);
+
+
 
     //
     //using x and y values.
@@ -98,8 +93,10 @@ $(()=>{
     //And to jump will be +2 single movements.
     //check if empty...by checking if a square is movable i.e. getMovableSquares().addClass('movable');
     //if empty
-    const darkPieceRightMove = (index.x + 1 && index.y - 1);
-    console.log(`This is a legal move : ${darkPieceMoveRight}`);
+    // const darkPieceMoveRight =(index.x + (index.x + 1)), (index.y + (index.y - 1)); //I need to get a set of coords back and make that a legalMoves
+
+
+
 
     // if (index % width === 0 && $darkPiece){
     //   index + width + 1
@@ -126,8 +123,13 @@ $(()=>{
     //toggling the 'selected' class of this piece
     //and possible deselecting other pieces
     toggleSelect($thisPiece);
+    resetMovables();
+    //get the legal moves for this
+    if ($thisPiece.hasClass('selected')) {
+      getMovableSquares($thisPiece).addClass('movable');
+    }
 
-  });
+  });//end of piece click event
 
   //checks the currentPosition of the clicked or selected div and returns the coords.
   function currentPosition(){
@@ -168,7 +170,8 @@ $(()=>{
 
             //set the new legal moves
         $('div.square').removeClass('movable');
-        getMovableSquares().addClass('movable');
+        resetMovables();
+        // getMovableSquares().addClass('movable');
       }
 
     }
@@ -177,7 +180,12 @@ $(()=>{
 
 
   // MORE FUNCTIONS
-
+  //this function should do two things
+// 1. remove the data item with key 'jumpedPieces' from every div.square
+// 2. remove the class 'movable' from every square
+  function resetMovables() {
+    $('div.square').removeData('jumpedPieces').removeClass('movable');
+  }
 
   //function for translating an x,y coordinates to a pixel position
   //the convention is that the square in the upper left corner is at position 0,0
@@ -207,24 +215,148 @@ $(()=>{
   //utility function for returning
   //the set of unoccupied dark squares
   //(possible places to move a piece)
-  function getMovableSquares() {
-      //select all of the squares
+  // function getMovableSquares($piece) {
+  //     //select all of the squares
+  //   const $squares = $('div.square');
+  //
+  // //select the occupied ones using the jQuery map() method
+  // //map creates a new object from an existing one using a translation function
+  //   const $takenSquares =
+  //         $('div.piece').map(function(index,piece) {
+  //           //this function translates a piece
+  //           const position = $(piece).position();
+  //           const coords = getCoords(position.top,position.left);
+  //           const squareIndex = coords.y * 8 + coords.x;
+  //           return $squares[squareIndex];
+  //         });
+  //   const coords = getCoords($piece.position().top,$piece.position().left);
+  //   const $out = $('div.square.dark').not($takenSquares);
+  //   return $out;
+  // }//end of old getMovableSquares
+
+  //utility function for returning
+//the set of legal moves given a piece
+// SIDE EFFECT: stores jumped pieces in a data element
+// of each square that can be moved to
+  function getMovableSquares($piece) {
+
+    //select all of the squares
     const $squares = $('div.square');
 
-  //select the occupied ones using the jQuery map() method
-  //map creates a new object from an existing one using a translation function
-    const $takenSquares =
-          $('div.piece').map(function(index,piece) {
-            //this function translates a piece
-            const position = $(piece).position();
-            const coords = getCoords(position.top,position.left);
-            const squareIndex = coords.y * 8 + coords.x;
-            return $squares[squareIndex];
-          });
+    //select the occupied ones using the jQuery map() method
+    //map creates a new object from an existing one
+    //using a translation function
+    var takenSquares = {};
+    $('div.piece').each(function(index,piece) {
 
-    const $out = $('div.square.dark').not($takenSquares);
-    return $out;
-  }
+            //this function translates a piece
+      const position = $(piece).position();
+      const coords = getCoords(position.top,position.left);
+      const squareIndex = coords.y * 8 + coords.x;
+      takenSquares[squareIndex] = $(piece);
+    });
+
+    const coords = getCoords($piece.position().top,$piece.position().left);
+
+    //lights move down
+    const lightVectors = [
+        {x: 1,y: 1},
+        {x: -1,y: 1}
+    ];
+    //darks move up
+    const darkVectors = [
+        {x: 1,y: -1},
+        {x: -1,y: -1}
+    ];
+    //kings move any which way
+    const kingVectors = lightVectors.concat(darkVectors);
+
+
+    let vectors;
+    if ($piece.hasClass('king')) {
+      vectors = kingVectors;
+    } else if ($piece.hasClass('light')) {
+      vectors = lightVectors;
+    } else {
+      vectors = darkVectors;
+    }
+
+    const outOfBounds = function(coords) {
+      return !(coords.x >= 0 && coords.x < 8 && coords.y >= 0 && coords.y < 8);
+    };
+
+    let $legalSquares = $();
+    const buildMoves = function(coords,vectors,jumpsOnly) {
+
+
+      if (outOfBounds(coords)) return;
+
+        //our current square is at coords
+      const $currentSquare = $squares.eq(coords.y*8 + coords.x);
+
+      $.each(vectors,function(index,vector) {
+
+
+        const newCoords = {
+          x: vector.x + coords.x,
+          y: vector.y + coords.y
+        };
+
+
+        if (outOfBounds(newCoords)) return;
+        const newSquareIndex = 8*newCoords.y + newCoords.x;
+            //if the square is taken,
+        if (takenSquares[newSquareIndex]) {
+                //it gets interesting
+                //ok - so we can only jump if their
+                //piece is different from ours
+          if ($piece.hasClass('dark')) {
+            if (takenSquares[newSquareIndex].hasClass('dark')) return;
+          } else {
+            if (takenSquares[newSquareIndex].hasClass('light')) return;
+          }
+
+
+          const jumpCoords = {
+            x: vector.x*2 + coords.x,
+            y: vector.y*2 + coords.y
+          };
+          if (outOfBounds(jumpCoords)) return;
+
+          const jumpSquareIndex = jumpCoords.y*8 + jumpCoords.x;
+                //if the jump square is free...
+                //add it and the data-jumped-pieces
+          if (!takenSquares[jumpSquareIndex]) {
+            const $newSquare = $squares.eq(jumpSquareIndex);
+                    //if we haven't already seen it
+            if (!$newSquare.is($legalSquares)) {
+
+                        //add the passed over square to it
+              $legalSquares = $legalSquares.add($newSquare);
+
+                        //and the jumped squares from how we got here
+              let $jumpedPieces = takenSquares[newSquareIndex];
+              if ($currentSquare.data('jumpedPieces')) {
+                $jumpedPieces = $jumpedPieces.add($currentSquare.data('jumpedPieces'));
+              }
+              $newSquare.data('jumpedPieces',$jumpedPieces);
+
+                        //and recurse, with jumpsOnly set to true
+              buildMoves(jumpCoords,vectors,true);
+            }
+          }
+        } else if (!jumpsOnly) {
+          const $newSquare = $squares.eq(newSquareIndex);
+          $newSquare.data('jumpedPieces',$());
+          $legalSquares = $legalSquares.add($newSquare);
+        }
+
+      });
+    };
+    buildMoves(coords,vectors,false);
+    return $legalSquares;
+
+  }//end of new getMovableSquares
 
   function setUpPieces() {
       //select all the divs with class 'piece'
