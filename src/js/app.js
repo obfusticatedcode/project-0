@@ -7,7 +7,7 @@ $(()=>{
   const $board = $('div#board');
   const $pieces = $('div#pieces');
   const $resetButton = $('#reset-button');
-
+  let coords = null;//setting coords globally so constantly updating
 
 
 
@@ -66,7 +66,7 @@ $(()=>{
   });
 
     //set up initial squares the class 'movable' represents a square
-    //that is unoccupied
+    //that is unoccupied and this allows all squares dark squares to be movable
   getMovableSquares().addClass('movable');
 
       //EVENTS
@@ -80,18 +80,34 @@ $(()=>{
     //turn `this` into a jQuery object
     const $thisPiece = $(event.target);
     //TEST. checking the piece index.
+    currentPosition(); //represents x and y coords
+    let index = coords;
     //getting the location of the piece
-    currentPosition();
+    console.log(index);
+    const firstColumn = index + width + 1;
+    console.log(firstColumn);
+    const darkPiece = $thisPiece.hasClass('dark');
+    console.log(darkPiece);
+
+    // if (index % width === 0 && $darkPiece){
+    //   index + width + 1
+    // }
     // take the index x and y value as index and check
     //if index % width === 0 the first column or
     //if index % width === width-1 the last column
-    //index + width
-    // check if it's p1 or p2 by the color
-    if ($thisPiece.hasClass('dark')){
-      console.log($thisPiece);
-    }else {
-      console.log(`This is a light piece`);
-    }
+    //if first column is true then check color/p1 or p2
+    //p1
+    //if p1 check square diagonally left if empty using
+    //index + width + 1 add the class 'movable'
+    //if last column is true then check color/p1 or p2
+    //if p1 check square diagonally right if empty using
+    //index + width-1 add the class 'movable'
+    //use CSS to highlight the movable squaures (legal moves)
+    //p2
+    //else it's p2
+
+
+
 
 
 
@@ -104,14 +120,15 @@ $(()=>{
   //checks the currentPosition of the clicked or selected div and returns the coords.
   function currentPosition(){
     const position = $(event.target).position();
-    const coords = getCoords(position.top,position.left);
-    console.log(coords);//getting the location of the piece
+    coords = getCoords(position.top,position.left);
+    // console.log(coords);//getting the location of the piece
     return coords;
 
   }
 
   $('div.square').on('click', (e)=>{
-    currentPosition();
+    currentPosition();//the currentPosition of the square; coords
+    // console.log('coords', coords);
     //turn `e or event` into a jQuery object
     const $pieceToMove = $(e.target);
 
