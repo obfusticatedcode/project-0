@@ -82,44 +82,6 @@ $(()=>{
 
 
 
-    //
-    //using x and y values.
-    //x value on the firstColumn will always be zero since the starting is a zero based index
-    //y value on the lastColumn will always be seven since the last index on a 8*8 is 7
-    //darkPiece moving right is x + 1 and y - 1
-    //darkPiece moving left is x - 1 and y - 1
-    //lightPiece moving right is x - 1 and y + 1
-    //lightPiece moving left is x + 1 and y + 1
-    //And to jump will be +2 single movements.
-    //check if empty...by checking if a square is movable i.e. getMovableSquares().addClass('movable');
-    //if empty
-    // const darkPieceMoveRight =(index.x + (index.x + 1)), (index.y + (index.y - 1)); //I need to get a set of coords back and make that a legalMoves
-
-
-
-
-    // if (index % width === 0 && $darkPiece){
-    //   index + width + 1
-    // }
-    // take the index x and y value as index and check
-    //if index % width === 0 the first column or
-    //if index % width === width-1 the last column
-    //if first column is true then check color/p1 or p2
-    //p1
-    //if p1 check square diagonally left if empty using
-    //index + width + 1 add the class 'movable'
-    //if last column is true then check color/p1 or p2
-    //if p1 check square diagonally right if empty using
-    //index + width-1 add the class 'movable'
-    //use CSS to highlight the movable squaures (legal moves)
-    //p2
-    //else it's p2
-
-
-
-
-
-
     //toggling the 'selected' class of this piece
     //and possible deselecting other pieces
     toggleSelect($thisPiece);
@@ -212,32 +174,11 @@ $(()=>{
     };
   }
 
-  //utility function for returning
-  //the set of unoccupied dark squares
-  //(possible places to move a piece)
-  // function getMovableSquares($piece) {
-  //     //select all of the squares
-  //   const $squares = $('div.square');
-  //
-  // //select the occupied ones using the jQuery map() method
-  // //map creates a new object from an existing one using a translation function
-  //   const $takenSquares =
-  //         $('div.piece').map(function(index,piece) {
-  //           //this function translates a piece
-  //           const position = $(piece).position();
-  //           const coords = getCoords(position.top,position.left);
-  //           const squareIndex = coords.y * 8 + coords.x;
-  //           return $squares[squareIndex];
-  //         });
-  //   const coords = getCoords($piece.position().top,$piece.position().left);
-  //   const $out = $('div.square.dark').not($takenSquares);
-  //   return $out;
-  // }//end of old getMovableSquares
 
-  //utility function for returning
+
+  //function for returning
 //the set of legal moves given a piece
-// SIDE EFFECT: stores jumped pieces in a data element
-// of each square that can be moved to
+// this also stores jumped pieces in a data element of each square that can be moved to
   function getMovableSquares($piece) {
 
     //select all of the squares
@@ -473,6 +414,37 @@ index - width-1 for player2 is going right diagonally
 4. King maker function
 5. How to take in the top right position
 6.Reset the game better
+//
+//using x and y values.
+//x value on the firstColumn will always be zero since the starting is a zero based index
+//y value on the lastColumn will always be seven since the last index on a 8*8 is 7
+//darkPiece moving right is x + 1 and y - 1
+//darkPiece moving left is x - 1 and y - 1
+//lightPiece moving right is x - 1 and y + 1
+//lightPiece moving left is x + 1 and y + 1
+//And to jump will be +2 single movements.
+//check if empty...by checking if a square is movable i.e. getMovableSquares().addClass('movable');
+//if empty
+// const darkPieceMoveRight =(index.x + (index.x + 1)), (index.y + (index.y - 1)); //I need to get a set of coords back and make that a legalMoves
 
+
+
+
+// if (index % width === 0 && $darkPiece){
+//   index + width + 1
+// }
+// take the index x and y value as index and check
+//if index % width === 0 the first column or
+//if index % width === width-1 the last column
+//if first column is true then check color/p1 or p2
+//p1
+//if p1 check square diagonally left if empty using
+//index + width + 1 add the class 'movable'
+//if last column is true then check color/p1 or p2
+//if p1 check square diagonally right if empty using
+//index + width-1 add the class 'movable'
+//use CSS to highlight the movable squaures (legal moves)
+//p2
+//else it's p2
 
 */
