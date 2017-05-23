@@ -84,10 +84,22 @@ $(()=>{
     let index = coords;
     //getting the location of the piece
     console.log(index);
-    const firstColumn = index + width + 1;
-    console.log(firstColumn);
     const darkPiece = $thisPiece.hasClass('dark');
     console.log(darkPiece);
+
+    //
+    //using x and y values.
+    //x value on the firstColumn will always be zero since the starting is a zero based index
+    //y value on the lastColumn will always be seven since the last index on a 8*8 is 7
+    //darkPiece moving right is x + 1 and y - 1
+    //darkPiece moving left is x - 1 and y - 1
+    //lightPiece moving right is x - 1 and y + 1
+    //lightPiece moving left is x + 1 and y + 1
+    //And to jump will be +2 single movements.
+    //check if empty...by checking if a square is movable i.e. getMovableSquares().addClass('movable');
+    //if empty
+    const darkPieceRightMove = (index.x + 1 && index.y - 1);
+    console.log(`This is a legal move : ${darkPieceMoveRight}`);
 
     // if (index % width === 0 && $darkPiece){
     //   index + width + 1

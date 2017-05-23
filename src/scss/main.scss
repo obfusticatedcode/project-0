@@ -127,3 +127,11 @@ div#heading {
 .clearfix{
   overflow: hidden;
 }
+
+
+//have a class called legal moves to highlight the legal moves only.
+.legalMoves{
+  -webkit-box-shadow: 0 0 10px 5px #74c12f;
+     -moz-box-shadow: 0 0 10px 5px #74c12f;
+          box-shadow: 0 0 10px 5px #74c12f;
+}
