@@ -1,5 +1,15 @@
-body{
+//VARIABLES to be defined during 'CSS and chill'
 
+
+body{
+  font-family: 'Source Code Pro', monospace;
+}
+
+footer{
+  padding: 10px;
+}
+#copywrite{
+  color: red;
 }
 
 div#game {
@@ -8,13 +18,12 @@ div#game {
 
 
 div#board {
-
     float:left;
-
-
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px #232621;
+    background-color: white;
     height:382px;
     width:382px;
-
     border-style:solid;
     border-width:9px;
     border-color:#DEB887;
@@ -49,7 +58,7 @@ div.square:nth-child(8n) {
 }
 
 div.square.light {
-    background-color:#ccc;
+    background-color:#fff;
 }
 
 div.square.dark {
@@ -58,7 +67,7 @@ div.square.dark {
 
 div#pieces {
     position:absolute;
-    /* 9 px puts us inside of the board's borders;*/
+    /* 9 px puts pieces inside of the board's borders;*/
     left:9px;
     top:9px;
     background-color:green;
@@ -69,7 +78,7 @@ div.piece {
     width:32px;
     height:32px;
     margin:7px;
-
+    cursor: pointer;
     -webkit-box-shadow: 0px 0px 3px #666;
        -moz-box-shadow: 0px 0px 3px #666;
             box-shadow: 0px 0px 3px #666;
@@ -88,19 +97,27 @@ div.piece:hover {
 }
 
 div.piece.selected {
-    -webkit-box-shadow: 0px 0px 8px #FFD700;
-       -moz-box-shadow: 0px 0px 8px #FFD700;
-            box-shadow: 0px 0px 8px #FFD700;
+    -webkit-box-shadow: 0 0 10px 5px #16A8C7;
+       -moz-box-shadow: 0 0 10px 5px #16A8C7;
+            box-shadow: 0 0 10px 5px #16A8C7;
 }
 
 div.piece.light {
-    background-color:red;
+    background-color: #e4a6ae;
+    border: 1px solid #B93848;
+    transition: all 0.2s linear;
 }
 
 div.piece.dark {
-    background-color:black;
+    background-color: #F1F1FF;
+    border: 1px solid #8b8bff;
+    transition: all 0.2s linear;//giving that slow glow
 }
 
-div#meta {
+div#heading {
     float:right;
+}
+
+.clearfix{
+  overflow: hidden;
 }
