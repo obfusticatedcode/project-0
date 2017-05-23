@@ -3,6 +3,7 @@
 
 body{
   font-family: 'Source Code Pro', monospace;
+  text-align: center;
 }
 
 footer{
@@ -27,7 +28,7 @@ div#board {
     border-style:solid;
     border-width:9px;
     border-color:#DEB887;
-    position: absolute;
+    position: relative;
 }
 
 div.square {
@@ -107,12 +108,16 @@ div.piece.light {
     background-color: #e4a6ae;
     border: 1px solid #B93848;
     transition: all 0.2s linear;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 div.piece.dark {
     background-color: #F1F1FF;
     border: 1px solid #8b8bff;
     transition: all 0.2s linear;//giving that slow glow
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 div#heading {

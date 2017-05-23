@@ -6,8 +6,128 @@ $(()=>{
   const border = 2;
   const $board = $('div#board');
   const $pieces = $('div#pieces');
+  const $resetButton = $('#reset-button');
 
-  //function for translating an x,y coordinat to a pixel position
+
+
+
+  //Creating the 64 squares and adding them to the DOM
+  const squareCount = 8*8; //8 rows by 8 columns; zero based index
+  for (let i = 0;i<squareCount;i++) {
+
+  //this line creates a new div with the class 'square'
+  //and appends it to the div with id 'board'
+    $board.append($('<div/>').addClass('square'));
+  }
+
+
+  //set up the board with the correct classes for the light and dark squares
+  setUpBoard();
+
+
+      //creating the 24 pieces and adding them to the DOM
+  const pieceCount = 24;
+  for (let i=0;i<pieceCount;i++) {
+
+    //this line appends an empty div with the class 'piece' to the div with id 'pieces'
+    $pieces.append($('<div/>').addClass('piece'));
+
+  }
+
+
+  //sets up the classes for the different types of piece
+  setUpPieces();
+
+  //this loop moves all the light pieces to their initial positions
+  $('div.piece.light').each(function(index,piece) {
+
+    //turning the index (from 0 - 11)
+    //into a x,y square coordinate using math
+    const y = Math.floor(index / 4);
+    const x = (index % 4) * 2 + (1 - y%2);
+
+    //turning the x,y coordingate into a pixel position
+    const pixelPosition = getPixels(x,y);
+    //actually moving the piece to its initial position
+    movePieceTo($(piece),pixelPosition.top,pixelPosition.left);
+  });
+
+    //this loop moves all the dark pieces to their initial positions
+  $('div.piece.dark').each(function(index,piece) {
+    //turning the index (from 0 - 11)
+    //into a x,y square coordinate using math
+    const y = Math.floor(index/4) + 5;
+    const x = (index % 4) * 2 + (1-y%2);
+
+    //turning the x,y coordinate into a pixel position
+    const pixelPosition = getPixels(x,y);
+    //moving the piece to its initial position
+    movePieceTo($(piece),pixelPosition.top,pixelPosition.left);
+  });
+
+    //set up initial squares the class 'movable' represents a square
+    //that is unoccupied
+  getMovableSquares().addClass('movable');
+
+      //EVENTS
+
+    //resetting the game.
+  $resetButton.on('click', ()=>{
+    reset();
+  });
+
+  $('div.piece').on('click',(event)=>{
+    //turn `this` into a jQuery object
+    const $thisPiece = $(event.target);
+
+    //toggleing the 'selected' class of this piece
+    //and possible deselecting other pieces
+    toggleSelect($thisPiece);
+
+  });
+
+
+
+  $('div.square').on('click', (e)=>{
+
+    //turn `e or event` into a jQuery object
+    const $pieceToMove = $(e.target);
+
+    //if $this is a legal square to move to...
+    if ($pieceToMove.hasClass('movable')) {
+
+          //get the piece with the class 'selected'
+      const $selectedPiece = $('div.piece.selected');
+
+          //only move if there is exactly one selected piece
+      if ($selectedPiece.length === 1) {
+            //get the index of the square
+            //and translate it to pixel position
+        const index = $pieceToMove.prevAll().length;
+        const x = index % 8;
+        const y = Math.floor(index / 8);
+        const pixels = getPixels(x,y);
+            //actually do the moving
+        movePieceTo($selectedPiece,pixels.top,pixels.left);
+            //increment the move counter
+        incrementmoveCounter();
+            //un-select the piece
+        $selectedPiece.removeClass('selected');
+
+            //set the new legal moves
+        $('div.square').removeClass('movable');
+        getMovableSquares().addClass('movable');
+      }
+
+    }
+
+  });
+
+
+  // MORE FUNCTIONS
+
+
+  //function for translating an x,y coordinates to a pixel position
   //the convention is that the square in the upper left corner is at position 0,0
   //the square in the upper right, at 7,0 and the lower
   //right at 7,7
@@ -20,7 +140,7 @@ $(()=>{
     };
   }
 
-  //utility function for turning a pixel position
+  //function for turning a pixel position
   //into the x,y coordinate of a square on the board
   //it follows the same coordinate convention as getPixels
   function getCoords(top,left) {
@@ -54,123 +174,14 @@ $(()=>{
     return $out;
   }
 
-
-
-  //Creating the 64 squares and adding them to the DOM
-  const squareCount = 8*8;
-  for (let i = 0;i<squareCount;i++) {
-
-  //this line creates a new div with the class 'square'
-  //and appends it to the div with id 'board'
-    $board.append($('<div/>').addClass('square'));
-  }
-
-
-    //set up the board with the correct classes
-    //for the light and dark squares
-  setUpBoard();
-
-
-      //creating the 24 pieces and adding them to the DOM
-  const pieceCount = 24;
-  for (let i=0;i<pieceCount;i++) {
-
-    //this line appends an empty div
-    //with the class 'piece' to the div with id 'pieces'
-    $pieces.append($('<div/>').addClass('piece'));
-
-  }
-
-
-      //sets up the classes for the different types of piece
-  setUpPieces();
-
-      //this loop moves all the light pieces to their initial positions
-  $('div.piece.light').each(function(index,piece) {
-
-          //turning the index (from 0 - 11)
-          //into a x,y square coordinate using math
-    const y = Math.floor(index / 4);
-    const x = (index % 4) * 2 + (1 - y%2);
-
-          //turning the x,y coordingate into a pixel position
-    const pixelPosition = getPixels(x,y);
-          //actually moving the piece to its initial position
-    movePieceTo($(piece),pixelPosition.top,pixelPosition.left);
-  });
-
-      //this loop moves all the dark pieces to their initial positions
-  $('div.piece.dark').each(function(index,piece) {
-          //turning the index (from 0 - 11)
-          //into a x,y square coordinate using math
-    const y = Math.floor(index/4) + 5;
-    const x = (index % 4) * 2 + (1-y%2);
-
-          //turning the x,y coordinate into a pixel position
-    const pixelPosition = getPixels(x,y);
-          //moving the piece to its initial position
-    movePieceTo($(piece),pixelPosition.top,pixelPosition.left);
-  });
-
-      //set up initial squares
-      //the class 'movable' represents a square
-      //that is unoccupied
-  getMovableSquares().addClass('movable');
-
-      //and now the events
-  $('div.piece').click(function() {
-          //turn `this` into a jQuery object
-    const $this = $(this);
-          //toggleing the 'selected' class of this piece
-          //and possible deselecting other pieces
-    toggleSelect($this);
-  });
-
-  $('div.square').click(function() {
-
-    //turn `this` into a jQuery object
-    const $this = $(this);
-
-    //if $this is a legal square to move to...
-    if ($this.hasClass('movable')) {
-
-      //get the piece with the class 'selected'
-      const $selectedPiece = $('div.piece.selected');
-
-      //only move if there is exactly one selected piece
-      if ($selectedPiece.length === 1) {
-        //get the index of the square
-        //and translate it to pixel position
-        const index = $this.prevAll().length;
-        const x = index % 8;
-        const y = Math.floor(index / 8);
-        const pixels = getPixels(x,y);
-        //actually do the moving
-        movePieceTo($selectedPiece,pixels.top,pixels.left);
-        //increment the move counter
-        incrementmoveCounter();
-        //un-select the piece
-        $selectedPiece.removeClass('selected');
-
-        //set the new legal moves
-        $('div.square').removeClass('movable');
-        getMovableSquares().addClass('movable');
-      }
-
-    }
-  });
-
-
-
-  // FUNCTIONS
   function setUpPieces() {
       //select all the divs with class 'piece'
     $('piece');
 //add the 'light' class to half of them
-    const  lightPieces = $('div.piece:even').addClass('light');
+    $('div.piece:even').addClass('light');
 //jQuery's even and odd selector methods to assign the classes .light and .dark.
 //add the 'dark' to the other half
-    const  darkPieces = $('div.piece:odd').addClass('dark');
+    $('div.piece:odd').addClass('dark');
 
   }
 
@@ -209,9 +220,7 @@ $(()=>{
   }
 
   function toggleSelect($piece) {
-      //if $piece has the class 'selected',
-      //remove it
-
+      //if $piece has the class 'selected',remove it
       //if $piece does not have the class 'selected'
       //make sure no other divs with the class 'piece'
       //have that class, then set $piece to have the class
@@ -225,7 +234,7 @@ $(()=>{
       $piece.addClass('selected');
     }
 
-  }
+  }//end of toggleSelect function
 
   function incrementmoveCounter() {
       //gets the html of the span with id moveCounter
@@ -236,5 +245,26 @@ $(()=>{
     $('#moveCounter').html(parseInt($('#moveCounter').html(),10)+1);
   }
 
+  //this resets the game by effectively reloading the page from cache
+  function reset(){
+    location.reload();
+  }
+
 
 });//end of JS load
+
+
+/*
+TODO:
+1. Player change from player 1 to player 2
+2. Figure out how to stop illegal moves.
+  -only make two postitions available at any given time
+  -once the piece has moved into a position make
+3. Jump moves to make the opponents piece disappear from the board and reset
+  the positon
+4. King maker function
+5. How to take in the top right position
+6.Reset the game better
+
+
+*/
