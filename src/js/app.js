@@ -80,10 +80,12 @@ $(()=>{
     //turn `this` into a jQuery object
     const $thisPiece = $(event.target);
     //TEST. checking the piece index.
+    //getting the location of the piece
     currentPosition();
-    // const position = $(event.target).position();
-    // const coords = getCoords(position.top,position.left);
-    // console.log(coords);//getting the location of the piece
+    // take the index x and y value as index and check
+    //if index % width === 0 the first column or
+    //if index % width === width-1 the last column
+    //index + width
     // check if it's p1 or p2 by the color
     if ($thisPiece.hasClass('dark')){
       console.log($thisPiece);
@@ -105,10 +107,11 @@ $(()=>{
     const coords = getCoords(position.top,position.left);
     console.log(coords);//getting the location of the piece
     return coords;
+
   }
 
   $('div.square').on('click', (e)=>{
-
+    currentPosition();
     //turn `e or event` into a jQuery object
     const $pieceToMove = $(e.target);
 
