@@ -38,6 +38,7 @@ $(()=>{
   //sets up the classes for the different types of piece
   setUpPieces();
 
+//LIGHT PIECES
   //this loop moves all the light pieces to their initial positions
   $('div.piece.light').each(function(index,piece) {
 
@@ -52,6 +53,7 @@ $(()=>{
     movePieceTo($(piece),pixelPosition.top,pixelPosition.left);
   });
 
+//DARK PIECES
     //this loop moves all the dark pieces to their initial positions
   $('div.piece.dark').each(function(index,piece) {
     //turning the index (from 0 - 11)
@@ -65,11 +67,8 @@ $(()=>{
     movePieceTo($(piece),pixelPosition.top,pixelPosition.left);
   });
 
-    //set up initial squares the class 'movable' represents a square
-    //that is unoccupied and this allows all squares dark squares to be movable
-  // getMovableSquares().addClass('movable');
 
-      //EVENTS
+  //EVENTS
 
     //resetting the game.
   $resetButton.on('click', ()=>{
@@ -79,9 +78,6 @@ $(()=>{
   $('div.piece').on('click',(event)=>{
     //turn `this` into a jQuery object
     const $thisPiece = $(event.target);
-
-
-
     //toggling the 'selected' class of this piece
     //and possible deselecting other pieces
     toggleSelect($thisPiece);
@@ -125,6 +121,8 @@ $(()=>{
         const pixels = getPixels(x,y);
             //actually do the moving
         movePieceTo($selectedPiece,pixels.top,pixels.left);
+          //removeCapturedPieces
+        removeCapturedPieces($pieceToMove); 
             //increment the move counter
         incrementmoveCounter();
             //un-select the piece
@@ -142,9 +140,8 @@ $(()=>{
 
 
   // MORE FUNCTIONS
-  //this function should do two things
-// 1. remove the data item with key 'jumpedPieces' from every div.square
-// 2. remove the class 'movable' from every square
+  //this function removes the data item with key 'jumpedPieces' from every div.square
+// and removes the class 'movable' from every square
   function resetMovables() {
     $('div.square').removeData('jumpedPieces').removeClass('movable');
   }
@@ -297,7 +294,7 @@ $(()=>{
     buildMoves(coords,vectors,false);
     return $legalSquares;
 
-  }//end of new getMovableSquares
+  }//end of getMovableSquares
 
   function setUpPieces() {
       //select all the divs with class 'piece'
@@ -368,6 +365,13 @@ $(()=>{
       //sets the html of the span with id moveCounter
       //to the new move count
     $('#moveCounter').html(parseInt($('#moveCounter').html(),10)+1);
+  }
+
+// this function gets the jQuery object stored in
+// the data object of $square under the key 'jumpedPieces'
+// and removes every element in that jQuery selection
+  function removeCapturedPieces($square) {
+    $square.data('jumpedPieces').remove();
   }
 
   //this resets the game by effectively reloading the page from cache
