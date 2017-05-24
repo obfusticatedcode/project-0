@@ -64,23 +64,24 @@ $(()=>{
   //EVENTS
 
 
+  function pieceSelect(){
+    $('div.piece').on('click',(event)=>{
+      //selected variable
+      //turn `this` into a jQuery object
+      const $thisPiece = $(event.target);
+      //toggling the 'selected' class of this piece
+      //and possible deselecting other pieces
+      toggleSelect($thisPiece);
+      resetMovables();
+      //get the legal moves for this
+      if ($thisPiece.hasClass('selected')) {
+        getMovableSquares($thisPiece).addClass('movable');
+      }
+    });//end of piece click event
+  }
 
-  $('div.piece').on('click',(event)=>{
-
-    //selected variable
-
-    //turn `this` into a jQuery object
-    const $thisPiece = $(event.target);
-    //toggling the 'selected' class of this piece
-    //and possible deselecting other pieces
-    toggleSelect($thisPiece);
-    resetMovables();
-    //get the legal moves for this
-    if ($thisPiece.hasClass('selected')) {
-      getMovableSquares($thisPiece).addClass('movable');
-    }
-
-  });//end of piece click event
+  // TEST pieceSelect()
+  pieceSelect();
 
   //checks the currentPosition of the clicked or selected div and returns the coords.
   function currentPosition(){
@@ -149,12 +150,20 @@ $(()=>{
 
 // Player change from player 1 to player 2
   //this function allows the players to be changed.
-  changePlayerTurn();
-  function changePlayerTurn(){
-    if ($('div.piece').hasClass('selected')){
-      console.log('hi');
-    }
-  }
+  // let $lightPlayer = $('div.piece.light');
+  // $lightPlayer = true;
+  // console.log($lightPlayer);
+  // let $darkPlayer = $('div.piece.dark');
+  // $darkPlayer = false;
+  // console.log($darkPlayer);
+  // changePlayerTurn();
+  // function changePlayerTurn(){
+  //   if ($lightPlayer){
+  //     pieceSelect();
+  //   }else if ($darkPlayer) {
+  //     $lightPlayer = false;
+  //   }
+  // }
 
   //function for translating an x,y coordinates to a pixel position
   //the convention is that the square in the upper left corner is at position 0,0
@@ -413,7 +422,7 @@ $(()=>{
     } else if(lightPieces === 0) {
       return console.log(`Player 2 wins`);
     } else if (lightPieces === 1 && darkPieces === 1){//and 40 moves are played afterwards
-      //yet to code this function 
+      //yet to code this function
       return console.log(`It's a draw`);
     }
 
