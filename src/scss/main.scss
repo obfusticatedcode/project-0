@@ -135,3 +135,13 @@ div#heading {
      -moz-box-shadow: 0 0 10px 5px #74c12f;
           box-shadow: 0 0 10px 5px #74c12f;
 }
+
+div.piece.king {
+    background-image:url('');
+    background-repeat:no-repeat;
+    background-position:center;
+    border: 5px solid #ffef99;
+    -webkit-border-radius:50%;
+       -moz-border-radius:50%;
+            border-radius:50%;
+}

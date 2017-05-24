@@ -7,7 +7,7 @@ $(()=>{
   const $board = $('div#board');
   const $pieces = $('div#pieces');
   const $resetButton = $('#reset-button');
-  let coords = null;//setting coords globally so constantly updating
+  let coords = null;//setting coords globally so it's constantly updating
 
 
 
@@ -37,35 +37,48 @@ $(()=>{
 
   //sets up the classes for the different types of piece
   setUpPieces();
+  darkPieces();
+  //setting up the darkPieces
+  //LIGHT PIECES
+  lightPieces();
+  // setting up the lightPieces
+  function lightPieces(){
+    const $lightPieces = $('div.piece.light');
+    //this loop moves all the light pieces to their initial positions
+    $lightPieces.each(function(index,piece) {
+      // TEST checking the length
+      console.log($lightPieces.length);
+      //turning the index (from 0 - 11)
+      //into a x,y square coordinate using math
+      const y = Math.floor(index / 4);
+      const x = (index % 4) * 2 + (1 - y%2);
 
-//LIGHT PIECES
-  //this loop moves all the light pieces to their initial positions
-  $('div.piece.light').each(function(index,piece) {
+      //turning the x,y coordinate into a pixel position
+      const pixelPosition = getPixels(x,y);
+      //actually moving the piece to its initial position
+      movePieceTo($(piece),pixelPosition.top,pixelPosition.left);
+    });
+  }//end of lightPieces function
 
-    //turning the index (from 0 - 11)
-    //into a x,y square coordinate using math
-    const y = Math.floor(index / 4);
-    const x = (index % 4) * 2 + (1 - y%2);
 
-    //turning the x,y coordingate into a pixel position
-    const pixelPosition = getPixels(x,y);
-    //actually moving the piece to its initial position
-    movePieceTo($(piece),pixelPosition.top,pixelPosition.left);
-  });
+  //DARK PIECES
 
-//DARK PIECES
-    //this loop moves all the dark pieces to their initial positions
-  $('div.piece.dark').each(function(index,piece) {
-    //turning the index (from 0 - 11)
-    //into a x,y square coordinate using math
-    const y = Math.floor(index/4) + 5;
-    const x = (index % 4) * 2 + (1-y%2);
+  function darkPieces(){
+    const $darkPieces =   $('div.piece.dark');
+        //this loop moves all the dark pieces to their initial positions
+    $darkPieces.each(function(index,piece) {
+        //turning the index (from 0 - 11)
+        //into a x,y square coordinate using math
+      const y = Math.floor(index/4) + 5;
+      const x = (index % 4) * 2 + (1-y%2);
 
-    //turning the x,y coordinate into a pixel position
-    const pixelPosition = getPixels(x,y);
-    //moving the piece to its initial position
-    movePieceTo($(piece),pixelPosition.top,pixelPosition.left);
-  });
+        //turning the x,y coordinate into a pixel position
+      const pixelPosition = getPixels(x,y);
+        //moving the piece to its initial position
+      movePieceTo($(piece),pixelPosition.top,pixelPosition.left);
+    });
+  }//end of darkPieces function
+
 
 
   //EVENTS
@@ -86,7 +99,6 @@ $(()=>{
     if ($thisPiece.hasClass('selected')) {
       getMovableSquares($thisPiece).addClass('movable');
     }
-
   });//end of piece click event
 
   //checks the currentPosition of the clicked or selected div and returns the coords.
@@ -105,7 +117,7 @@ $(()=>{
     const $pieceToMove = $(e.target);
 
 
-    //if $this is a legal square to move to...
+    //if $(this) is a legal square to move to...
     if ($pieceToMove.hasClass('movable')) {
 
           //get the piece with the class 'selected'
@@ -122,10 +134,13 @@ $(()=>{
             //actually do the moving
         movePieceTo($selectedPiece,pixels.top,pixels.left);
           //removeCapturedPieces
-        removeCapturedPieces($pieceToMove); 
+        removeCapturedPieces($pieceToMove);
+        //.prevAll().length is used to get the index
+        //of the selected piece
+        checkKing($selectedPiece,$pieceToMove.prevAll().length);
             //increment the move counter
         incrementmoveCounter();
-            //un-select the piece
+            //de-select the piece
         $selectedPiece.removeClass('selected');
 
             //set the new legal moves
@@ -145,6 +160,9 @@ $(()=>{
   function resetMovables() {
     $('div.square').removeData('jumpedPieces').removeClass('movable');
   }
+
+// Player change from player 1 to player 2
+
 
   //function for translating an x,y coordinates to a pixel position
   //the convention is that the square in the upper left corner is at position 0,0
@@ -197,26 +215,25 @@ $(()=>{
     const coords = getCoords($piece.position().top,$piece.position().left);
 
     //lights move down
-    const lightVectors = [
+    const lightDirection = [
         {x: 1,y: 1},
         {x: -1,y: 1}
     ];
     //darks move up
-    const darkVectors = [
+    const darkDirection = [
         {x: 1,y: -1},
         {x: -1,y: -1}
     ];
     //kings move any which way
-    const kingVectors = lightVectors.concat(darkVectors);
+    const kingDirection = lightDirection.concat(darkDirection);
 
-
-    let vectors;
+    let direction;
     if ($piece.hasClass('king')) {
-      vectors = kingVectors;
+      direction = kingDirection;
     } else if ($piece.hasClass('light')) {
-      vectors = lightVectors;
+      direction = lightDirection;
     } else {
-      vectors = darkVectors;
+      direction = darkDirection;
     }
 
     const outOfBounds = function(coords) {
@@ -224,40 +241,32 @@ $(()=>{
     };
 
     let $legalSquares = $();
-    const buildMoves = function(coords,vectors,jumpsOnly) {
-
-
+    const buildMoves = function(coords,direction,jumpsOnly) {
       if (outOfBounds(coords)) return;
-
-        //our current square is at coords
+        //current square is at coords
       const $currentSquare = $squares.eq(coords.y*8 + coords.x);
-
-      $.each(vectors,function(index,vector) {
-
+      $.each(direction,function(index,direction) {
 
         const newCoords = {
-          x: vector.x + coords.x,
-          y: vector.y + coords.y
+          x: direction.x + coords.x,
+          y: direction.y + coords.y
         };
-
 
         if (outOfBounds(newCoords)) return;
         const newSquareIndex = 8*newCoords.y + newCoords.x;
             //if the square is taken,
         if (takenSquares[newSquareIndex]) {
-                //it gets interesting
-                //ok - so we can only jump if their
-                //piece is different from ours
+
+                //Can only jump if piece is different 
           if ($piece.hasClass('dark')) {
             if (takenSquares[newSquareIndex].hasClass('dark')) return;
           } else {
             if (takenSquares[newSquareIndex].hasClass('light')) return;
           }
 
-
           const jumpCoords = {
-            x: vector.x*2 + coords.x,
-            y: vector.y*2 + coords.y
+            x: direction.x*2 + coords.x,
+            y: direction.y*2 + coords.y
           };
           if (outOfBounds(jumpCoords)) return;
 
@@ -280,7 +289,7 @@ $(()=>{
               $newSquare.data('jumpedPieces',$jumpedPieces);
 
                         //and recurse, with jumpsOnly set to true
-              buildMoves(jumpCoords,vectors,true);
+              buildMoves(jumpCoords,direction,true);
             }
           }
         } else if (!jumpsOnly) {
@@ -291,7 +300,7 @@ $(()=>{
 
       });
     };
-    buildMoves(coords,vectors,false);
+    buildMoves(coords,direction,false);
     return $legalSquares;
 
   }//end of getMovableSquares
@@ -307,6 +316,7 @@ $(()=>{
 
   }
 
+  //actually moving the piece
   function movePieceTo($piece,newTop,newLeft) {
       //set the css 'top' and 'left'
       //attributes of the passed piece
@@ -374,6 +384,32 @@ $(()=>{
     $square.data('jumpedPieces').remove();
   }
 
+  // This function takes a $piece and the index of a square
+  //squareIndex will be between 0 - 63 (inclusive).
+// if the index refers to an element in the first row or last row,
+// the class 'king' should be added to the $piece
+  function checkKing($piece,squareIndex) {
+    for(var i = 0; i < 64; i++){
+      if (squareIndex < 8 || squareIndex >= 56){
+        $piece.addClass('king');
+      }
+    }
+  }
+
+//winning conditions: If one player only has their pieces on the board left
+//they win.
+  function piecesLeft(){
+    const darkPieces = $darkPieces.length;
+    const lightPieces = $lightPieces.length;
+    console.log($lightPieces.length);
+
+    if (darkPieces < lightPieces && lightPieces === 0) {
+      return console.log(`Player 1 wins`);
+    } else {
+      return console.log(`Player 2 wins`);
+    }
+  }
+
   //this resets the game by effectively reloading the page from cache
   function reset(){
     location.reload();
@@ -382,26 +418,42 @@ $(()=>{
 
 
 
+
+
 });//end of JS load
 
 
 /*
+
+TODO:
+1. Player change from player 1 to player 2
+2. Reset the game by putting the pieces to the original position
+3. Win conditions, if either player has pieces left on the board while the other doesn't
+  then it's a win.
+4.
+
+
 TODO:
 1. Player change from player 1 to player 2
 2. Figure out how to stop illegal moves.
   -only make two postitions available at any given time
   -once the piece has moved into a position make
+3. Jump moves to make the opponents piece disappear from the board and reset
+  the positon
+4. King maker function
+5. How to take in the top right position
+6.Reset the game better
 
-  -On click of sqaure
-  -get piece on sqaure (e.target)
-  -check if piece belongs to p1 or p2
-  -check relevant squares
-    .if index of currentSquare
-    .if square is not in the first column
-    check square diagonally left and movable class if empty
-    .if square is not in the last column
-    check square diagonally right and movable class if empty
-  -once piece is moved or if un-selected remove movable class from all squares.
+-On click of sqaure
+-get piece on sqaure (e.target)
+-check if piece belongs to p1 or p2
+-check relevant squares
+  .if index of currentSquare
+  .if square is not in the first column
+  check square diagonally left and movable class if empty
+  .if square is not in the last column
+  check square diagonally right and movable class if empty
+-once piece is moved or if un-selected remove movable class from all squares.
 
 index (position)% width === 0 ...represents the first column
 index % width === width-1 ...represents the last column
@@ -411,13 +463,6 @@ index + width-1 for player1 is going right diagonally
 
 index - width+1 for player2 is going left diagonally
 index - width-1 for player2 is going right diagonally
-
-
-3. Jump moves to make the opponents piece disappear from the board and reset
-  the positon
-4. King maker function
-5. How to take in the top right position
-6.Reset the game better
 //
 //using x and y values.
 //x value on the firstColumn will always be zero since the starting is a zero based index
