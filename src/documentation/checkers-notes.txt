@@ -3,4 +3,65 @@
 //pseudo-code the game before writing code.
 //test everything, all that's added to the code base is tested
 //go through jQuery lessons
+TODO:
+1. Player change from player 1 to player 2
+2. Figure out how to stop illegal moves.
+  -only make two postitions available at any given time
+  -once the piece has moved into a position make
+3. Jump moves to make the opponents piece disappear from the board and reset
+  the positon
+4. King maker function
+5. How to take in the top right position
+6.Reset the game better
+
+-On click of sqaure
+-get piece on sqaure (e.target)
+-check if piece belongs to p1 or p2
+-check relevant squares
+  .if index of currentSquare
+  .if square is not in the first column
+  check square diagonally left and movable class if empty
+  .if square is not in the last column
+  check square diagonally right and movable class if empty
+-once piece is moved or if un-selected remove movable class from all squares.
+
+index (position)% width === 0 ...represents the first column
+index % width === width-1 ...represents the last column
+
+index + width-1 for player1 is going left diagonally
+index + width-1 for player1 is going right diagonally
+
+index - width+1 for player2 is going left diagonally
+index - width-1 for player2 is going right diagonally
 //
+//using x and y values.
+//x value on the firstColumn will always be zero since the starting is a zero based index
+//y value on the lastColumn will always be seven since the last index on a 8*8 is 7
+//darkPiece moving right is x + 1 and y - 1
+//darkPiece moving left is x - 1 and y - 1
+//lightPiece moving right is x - 1 and y + 1
+//lightPiece moving left is x + 1 and y + 1
+//And to jump will be +2 single movements.
+//check if empty...by checking if a square is movable i.e. getMovableSquares().addClass('movable');
+//if empty
+// const darkPieceMoveRight =(index.x + (index.x + 1)), (index.y + (index.y - 1)); //I need to get a set of coords back and make that a legalMoves
+
+
+
+
+// if (index % width === 0 && $darkPiece){
+//   index + width + 1
+// }
+// take the index x and y value as index and check
+//if index % width === 0 the first column or
+//if index % width === width-1 the last column
+//if first column is true then check color/p1 or p2
+//p1
+//if p1 check square diagonally left if empty using
+//index + width + 1 add the class 'movable'
+//if last column is true then check color/p1 or p2
+//if p1 check square diagonally right if empty using
+//index + width-1 add the class 'movable'
+//use CSS to highlight the movable squaures (legal moves)
+//p2
+//else it's p2

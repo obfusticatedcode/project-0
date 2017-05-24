@@ -65,23 +65,45 @@ $(()=>{
 
 
   function pieceSelect(){
-    $('div.piece').on('click',(event)=>{
-      //selected variable
-      //turn `this` into a jQuery object
-      const $thisPiece = $(event.target);
-      //toggling the 'selected' class of this piece
-      //and possible deselecting other pieces
-      toggleSelect($thisPiece);
-      resetMovables();
-      //get the legal moves for this
-      if ($thisPiece.hasClass('selected')) {
-        getMovableSquares($thisPiece).addClass('movable');
-      }
-    });//end of piece click event
+    if(pieceSelectEnabled === true){
+      console.log(pieceSelectEnabled);
+      $('div.piece').on('click',(event)=>{
+        //selected variable
+        //turn `this` into a jQuery object
+        const $thisPiece = $(event.target);
+        //toggling the 'selected' class of this piece
+        //and possible deselecting other pieces
+        toggleSelect($thisPiece);
+        resetMovables();
+        //get the legal moves for this
+        if ($thisPiece.hasClass('selected')) {
+          getMovableSquares($thisPiece).addClass('movable');
+        }
+      });//end of piece click event
+    }
   }
 
+  // TEST changing players
+
+
   // TEST pieceSelect()
-  pieceSelect();
+  let pieceSelectEnabled = true; //true is switched on state
+  pieceSelect();// player to select a piece
+  // Player change from player 1 to player 2
+    //this function allows the players to be changed.
+  function incrementMoveCount(color) {
+      //gets the html of the span with id lightMoveCount or darkMoveCount
+      //turns it into a number increments it by one
+      //sets the html of the span with id lightMoveCount or darkMoveCount to the new move count
+    let whichCounter = '';
+    color === 'light' ? whichCounter = '#lightMoveCount' : whichCounter = '#darkMoveCount';
+    let $moves = parseInt($(whichCounter).html());
+    $moves++;
+
+    $(whichCounter).html($moves);
+    console.log($moves);
+    //if the number is even then it's light's move and odd it's dark's move.
+  }//end of incrementMoveCount()
 
   //checks the currentPosition of the clicked or selected div and returns the coords.
   function currentPosition(){
@@ -127,10 +149,13 @@ $(()=>{
 
         //set the new legal moves
         $('div.square').removeClass('movable');
-        // TEST. testing the winning conditions
+
+        // TEST. testing the winning conditions by checking the number of pieces left on the board
         piecesLeft();
-            //increment the move counter
+        
+        //increment the move counter
         incrementmoveCounter();
+
 
         let color = '';
         if ($selectedPiece.hasClass('light') === true) {
@@ -150,33 +175,12 @@ $(()=>{
   });
 
 
-  // MORE FUNCTIONS
-  //this function removes the data item with key 'jumpedPieces' from every div.square
+// MORE FUNCTIONS
+//this function removes the data item with key 'jumpedPieces' from every div.square
 // and removes the class 'movable' from every square
   function resetMovables() {
     $('div.square').removeData('jumpedPieces').removeClass('movable');
   }
-
-
-
-
-  // Player change from player 1 to player 2
-    //this function allows the players to be changed.
-
-
-  function incrementMoveCount(color) {
-      //gets the html of the span with id lightMoveCount or darkMoveCount
-      //turns it into a number increments it by one
-      //sets the html of the span with id lightMoveCount or darkMoveCount to the new move count
-    let whichCounter = '';
-    color === 'light' ? whichCounter = '#lightMoveCount' : whichCounter = '#darkMoveCount';
-    let $moves = parseInt($(whichCounter).html());
-    $moves++;
-    console.log($moves);
-    $(whichCounter).html($moves);
-  }//end of incrementMoveCount()
-
-
 
   //function for translating an x,y coordinates to a pixel position
   //the convention is that the square in the upper left corner is at position 0,0
@@ -333,7 +337,6 @@ $(()=>{
       //to the arguments newTop and newLeft
     $piece.css('top', newTop);
     $piece.css('left', newLeft);
-
   }
 
   function setUpBoard() {
@@ -403,7 +406,6 @@ $(()=>{
 
   }
 
-
 // this function gets the jQuery object stored in
 // the data object of $square under the key 'jumpedPieces'
 // and removes every element in that jQuery selection
@@ -411,8 +413,8 @@ $(()=>{
     $square.data('jumpedPieces').remove();
   }
 
-  // This function takes a $piece and the index of a square
-  //squareIndex will be between 0 - 63 (inclusive).
+// This function takes a $piece and the index of a square
+//squareIndex will be between 0 - 63 (inclusive).
 // if the index refers to an element in the first row or last row,
 // the class 'king' should be added to the $piece
   function checkKing($piece,squareIndex) {
@@ -464,68 +466,5 @@ TODO:
   then it's a win.
 4.
 
-
-TODO:
-1. Player change from player 1 to player 2
-2. Figure out how to stop illegal moves.
-  -only make two postitions available at any given time
-  -once the piece has moved into a position make
-3. Jump moves to make the opponents piece disappear from the board and reset
-  the positon
-4. King maker function
-5. How to take in the top right position
-6.Reset the game better
-
--On click of sqaure
--get piece on sqaure (e.target)
--check if piece belongs to p1 or p2
--check relevant squares
-  .if index of currentSquare
-  .if square is not in the first column
-  check square diagonally left and movable class if empty
-  .if square is not in the last column
-  check square diagonally right and movable class if empty
--once piece is moved or if un-selected remove movable class from all squares.
-
-index (position)% width === 0 ...represents the first column
-index % width === width-1 ...represents the last column
-
-index + width-1 for player1 is going left diagonally
-index + width-1 for player1 is going right diagonally
-
-index - width+1 for player2 is going left diagonally
-index - width-1 for player2 is going right diagonally
-//
-//using x and y values.
-//x value on the firstColumn will always be zero since the starting is a zero based index
-//y value on the lastColumn will always be seven since the last index on a 8*8 is 7
-//darkPiece moving right is x + 1 and y - 1
-//darkPiece moving left is x - 1 and y - 1
-//lightPiece moving right is x - 1 and y + 1
-//lightPiece moving left is x + 1 and y + 1
-//And to jump will be +2 single movements.
-//check if empty...by checking if a square is movable i.e. getMovableSquares().addClass('movable');
-//if empty
-// const darkPieceMoveRight =(index.x + (index.x + 1)), (index.y + (index.y - 1)); //I need to get a set of coords back and make that a legalMoves
-
-
-
-
-// if (index % width === 0 && $darkPiece){
-//   index + width + 1
-// }
-// take the index x and y value as index and check
-//if index % width === 0 the first column or
-//if index % width === width-1 the last column
-//if first column is true then check color/p1 or p2
-//p1
-//if p1 check square diagonally left if empty using
-//index + width + 1 add the class 'movable'
-//if last column is true then check color/p1 or p2
-//if p1 check square diagonally right if empty using
-//index + width-1 add the class 'movable'
-//use CSS to highlight the movable squaures (legal moves)
-//p2
-//else it's p2
 
 */
