@@ -131,6 +131,15 @@ $(()=>{
         piecesLeft();
             //increment the move counter
         incrementmoveCounter();
+
+        let color = '';
+        if ($selectedPiece.hasClass('light') === true) {
+          color = 'light';
+        } else {
+          color = 'dark';
+        }
+        incrementMoveCount(color);
+
         //reset the squares to allow moves
         resetMovables();
 
@@ -148,22 +157,26 @@ $(()=>{
     $('div.square').removeData('jumpedPieces').removeClass('movable');
   }
 
-// Player change from player 1 to player 2
-  //this function allows the players to be changed.
-  // let $lightPlayer = $('div.piece.light');
-  // $lightPlayer = true;
-  // console.log($lightPlayer);
-  // let $darkPlayer = $('div.piece.dark');
-  // $darkPlayer = false;
-  // console.log($darkPlayer);
-  // changePlayerTurn();
-  // function changePlayerTurn(){
-  //   if ($lightPlayer){
-  //     pieceSelect();
-  //   }else if ($darkPlayer) {
-  //     $lightPlayer = false;
-  //   }
-  // }
+
+
+
+  // Player change from player 1 to player 2
+    //this function allows the players to be changed.
+
+
+  function incrementMoveCount(color) {
+      //gets the html of the span with id lightMoveCount or darkMoveCount
+      //turns it into a number increments it by one
+      //sets the html of the span with id lightMoveCount or darkMoveCount to the new move count
+    let whichCounter = '';
+    color === 'light' ? whichCounter = '#lightMoveCount' : whichCounter = '#darkMoveCount';
+    let $moves = parseInt($(whichCounter).html());
+    $moves++;
+    console.log($moves);
+    $(whichCounter).html($moves);
+  }//end of incrementMoveCount()
+
+
 
   //function for translating an x,y coordinates to a pixel position
   //the convention is that the square in the upper left corner is at position 0,0
