@@ -7,41 +7,22 @@ $(()=>{
   const $board = $('div#board');
   const $pieces = $('div#pieces');
   const $resetButton = $('#reset-button');
+  const $moveCounter = $('#moveCounter');
+
   let coords = null;//setting coords globally so it's constantly updating
-
-
-
-  //Creating the 64 squares and adding them to the DOM
-  const squareCount = 8*8; //8 rows by 8 columns; zero based index
-  for (let i = 0;i<squareCount;i++) {
-
-  //this line creates a new div with the class 'square'
-  //and appends it to the div with id 'board'
-    $board.append($('<div/>').addClass('square'));
-  }
-
 
   //set up the board with the correct classes for the light and dark squares
   setUpBoard();
-
-
-      //creating the 24 pieces and adding them to the DOM
-  const pieceCount = 24;
-  for (let i=0;i<pieceCount;i++) {
-
-    //this line appends an empty div with the class 'piece' to the div with id 'pieces'
-    $pieces.append($('<div/>').addClass('piece'));
-
-  }
-
-
   //sets up the classes for the different types of piece
   setUpPieces();
-  darkPieces();
   //setting up the darkPieces
+  darkPieces();
   //LIGHT PIECES
-  lightPieces();
   // setting up the lightPieces
+  lightPieces();
+
+
+
   function lightPieces(){
     const $lightPieces = $('div.piece.light');
     //this loop moves all the light pieces to their initial positions
@@ -62,7 +43,6 @@ $(()=>{
 
 
   //DARK PIECES
-
   function darkPieces(){
     const $darkPieces =   $('div.piece.dark');
         //this loop moves all the dark pieces to their initial positions
@@ -83,12 +63,12 @@ $(()=>{
 
   //EVENTS
 
-    //resetting the game.
-  $resetButton.on('click', ()=>{
-    reset();
-  });
+
 
   $('div.piece').on('click',(event)=>{
+
+    //selected variable
+
     //turn `this` into a jQuery object
     const $thisPiece = $(event.target);
     //toggling the 'selected' class of this piece
@@ -99,6 +79,7 @@ $(()=>{
     if ($thisPiece.hasClass('selected')) {
       getMovableSquares($thisPiece).addClass('movable');
     }
+
   });//end of piece click event
 
   //checks the currentPosition of the clicked or selected div and returns the coords.
@@ -109,6 +90,8 @@ $(()=>{
     return coords;
 
   }
+
+
 
   $('div.square').on('click', (e)=>{
     currentPosition();//the currentPosition of the square; coords
@@ -138,15 +121,18 @@ $(()=>{
         //.prevAll().length is used to get the index
         //of the selected piece
         checkKing($selectedPiece,$pieceToMove.prevAll().length);
-            //increment the move counter
-        incrementmoveCounter();
-            //de-select the piece
+        //de-select the piece to end the move
         $selectedPiece.removeClass('selected');
 
-            //set the new legal moves
+        //set the new legal moves
         $('div.square').removeClass('movable');
+        // TEST. testing the winning conditions
+        piecesLeft();
+            //increment the move counter
+        incrementmoveCounter();
+        //reset the squares to allow moves
         resetMovables();
-        // getMovableSquares().addClass('movable');
+
       }
 
     }
@@ -162,7 +148,13 @@ $(()=>{
   }
 
 // Player change from player 1 to player 2
-
+  //this function allows the players to be changed.
+  changePlayerTurn();
+  function changePlayerTurn(){
+    if ($('div.piece').hasClass('selected')){
+      console.log('hi');
+    }
+  }
 
   //function for translating an x,y coordinates to a pixel position
   //the convention is that the square in the upper left corner is at position 0,0
@@ -189,10 +181,7 @@ $(()=>{
     };
   }
 
-
-
-  //function for returning
-//the set of legal moves given a piece
+  //function for returning the set of legal moves given a piece
 // this also stores jumped pieces in a data element of each square that can be moved to
   function getMovableSquares($piece) {
 
@@ -214,17 +203,17 @@ $(()=>{
 
     const coords = getCoords($piece.position().top,$piece.position().left);
 
-    //lights move down
+    //lights move down the board
     const lightDirection = [
         {x: 1,y: 1},
         {x: -1,y: 1}
     ];
-    //darks move up
+    //darks move up the board
     const darkDirection = [
         {x: 1,y: -1},
         {x: -1,y: -1}
     ];
-    //kings move any which way
+    //kings move in any direction
     const kingDirection = lightDirection.concat(darkDirection);
 
     let direction;
@@ -257,7 +246,7 @@ $(()=>{
             //if the square is taken,
         if (takenSquares[newSquareIndex]) {
 
-                //Can only jump if piece is different 
+                //Can only jump if piece is different
           if ($piece.hasClass('dark')) {
             if (takenSquares[newSquareIndex].hasClass('dark')) return;
           } else {
@@ -278,17 +267,17 @@ $(()=>{
                     //if we haven't already seen it
             if (!$newSquare.is($legalSquares)) {
 
-                        //add the passed over square to it
+              //add the passed over square to it
               $legalSquares = $legalSquares.add($newSquare);
 
-                        //and the jumped squares from how we got here
+              //and the jumped squares from how we got here
               let $jumpedPieces = takenSquares[newSquareIndex];
               if ($currentSquare.data('jumpedPieces')) {
                 $jumpedPieces = $jumpedPieces.add($currentSquare.data('jumpedPieces'));
               }
               $newSquare.data('jumpedPieces',$jumpedPieces);
 
-                        //and recurse, with jumpsOnly set to true
+              //and recurse, with jumpsOnly set to true
               buildMoves(jumpCoords,direction,true);
             }
           }
@@ -313,7 +302,6 @@ $(()=>{
 //jQuery's even and odd selector methods to assign the classes .light and .dark.
 //add the 'dark' to the other half
     $('div.piece:odd').addClass('dark');
-
   }
 
   //actually moving the piece
@@ -327,6 +315,22 @@ $(()=>{
   }
 
   function setUpBoard() {
+
+    //Creating the 64 squares and adding them to the DOM
+    const squareCount = 8*8; //8 rows by 8 columns; zero based index
+    for (let i = 0;i<squareCount;i++) {
+    //this line creates a new div with the class 'square'
+    //and appends it to the div with id 'board'
+      $board.append($('<div/>').addClass('square'));
+    }
+
+    //creating the 24 pieces and adding them to the DOM
+    const pieceCount = 24;
+
+    for (let i=0;i<pieceCount;i++) {
+      //this line appends an empty div with the class 'piece' to the div with id 'pieces'
+      $pieces.append($('<div/>').addClass('piece'));
+    }
       //iterate through all of the divs with class `square`
       //figure out whether each one should be
       //light or dark, and assign the proper class
@@ -349,7 +353,7 @@ $(()=>{
       return (oddX ^ oddY);
     }
 
-  }
+  }//end of setUpBoard()
 
   function toggleSelect($piece) {
       //if $piece has the class 'selected',remove it
@@ -369,13 +373,14 @@ $(()=>{
   }//end of toggleSelect function
 
   function incrementmoveCounter() {
-      //gets the html of the span with id moveCounter
-      //turns it into a number
+      //gets the html of the span with id moveCounter turns it into a number
       //increments it by one
       //sets the html of the span with id moveCounter
       //to the new move count
-    $('#moveCounter').html(parseInt($('#moveCounter').html(),10)+1);
+    return  $moveCounter.html(parseInt($('#moveCounter').html(),10)+1);
+
   }
+
 
 // this function gets the jQuery object stored in
 // the data object of $square under the key 'jumpedPieces'
@@ -399,26 +404,31 @@ $(()=>{
 //winning conditions: If one player only has their pieces on the board left
 //they win.
   function piecesLeft(){
+    const $lightPieces = $('div.piece.light');
+    const $darkPieces = $('div.piece.dark');
     const darkPieces = $darkPieces.length;
     const lightPieces = $lightPieces.length;
-    console.log($lightPieces.length);
-
-    if (darkPieces < lightPieces && lightPieces === 0) {
+    if (darkPieces === 0) {
       return console.log(`Player 1 wins`);
-    } else {
+    } else if(lightPieces === 0) {
       return console.log(`Player 2 wins`);
+    } else if (lightPieces === 1 && darkPieces === 1){//and 40 moves are played afterwards
+      //yet to code this function 
+      return console.log(`It's a draw`);
     }
+
   }
+
+  //resetting the game.
+  $resetButton.on('click', ()=>{
+    reset();
+    // setting up the pieces after emptying them.
+  });
 
   //this resets the game by effectively reloading the page from cache
   function reset(){
     location.reload();
   }
-
-
-
-
-
 
 });//end of JS load
 
