@@ -1,6 +1,7 @@
 //VARIABLES to be defined during 'CSS and chill'
 
-
+// $lightPink = #FFF8F9
+// $gold = #FFD700
 
 
 body{
@@ -25,6 +26,13 @@ div#game {
     width: 30%;
 }
 
+article.instructions{
+  font-size: 12px;
+  background-color: #FFF8F9;
+}
+ul{
+  list-style: none;
+}
 
 div#board {
     // float:left;
@@ -125,7 +133,7 @@ div.piece.light {
 div.piece.dark {
     background-color: #F1F1FF;
     border: 3px solid #8b8bff;
-    border-radius: 50%; 
+    border-radius: 50%;
     transition: all 0.2s linear;//giving that slow glow
     background-repeat: no-repeat;
     background-position: center;
@@ -163,7 +171,7 @@ button{
 }
 
 div.piece.king {
-    background-image:url('');
+    background-image:url(''); //relavtive file path for the file
     background-repeat:no-repeat;
     background-position:center;
     border: 5px solid #ffef99;

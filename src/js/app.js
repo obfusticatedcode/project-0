@@ -7,10 +7,11 @@ $(()=>{
   const $board = $('div#board');
   const $pieces = $('div#pieces');
   const $resetButton = $('#reset-button');
+  const $rulesButton = $('#rules-button');
+  const $instructions = $('.instructions');
 
 
   let coords = null;//setting coords globally so it's constantly updating
-
   //set up the board with the correct classes for the light and dark squares
   setUpBoard();
   //sets up the classes for the different types of piece
@@ -62,32 +63,35 @@ $(()=>{
 
   //EVENTS
   function pieceSelect(){
-    if(pieceSelectEnabled === true){
-      console.log(pieceSelectEnabled);
-      $('div.piece').on('click',(event)=>{
+    $('div.piece').on('click',(event)=>{
         //selected variable
         //turn `this` into a jQuery object
-        const $thisPiece = $(event.target);
+      const $thisPiece = $(event.target);
         //toggling the 'selected' class of this piece
         //and possible deselecting other pieces
-        toggleSelect($thisPiece);
-        resetMovables();
+      toggleSelect($thisPiece);
+      resetMovables();
         //get the legal moves for this
-        if ($thisPiece.hasClass('selected')) {
-          getMovableSquares($thisPiece).addClass('movable');
-        }
-      });//end of piece click event
-    }
-  }
-
-
-  //checks the currentPosition of the clicked or selected div and returns the coords.
-  function currentPosition(){
-    const position = $(event.target).position();
-    coords = getCoords(position.top,position.left);
-    return coords;
+      if ($thisPiece.hasClass('selected')) {
+        getMovableSquares($thisPiece).addClass('movable');
+      }
+    });//end of piece click event
 
   }
+
+  // BUTTONS
+  //resetting the game.
+  $resetButton.on('click', ()=>{
+    reset();
+    // setting up the pieces after emptying them.
+  });
+
+  //hiding and showing the rules.
+  $rulesButton.on('click', ()=>{
+    $instructions.toggle('slow');
+    console.log(`Clicking here works`);
+  });
+
 
 
   $('div.square').on('click', (e)=>{
@@ -129,20 +133,13 @@ $(()=>{
         //increment the move counter
         incrementMoveCounter();
 
-        let color = '';
-        if ($selectedPiece.hasClass('light') === true) {
-          color = 'light';
-        } else {
-          color = 'dark';
-        }
+        const color = $selectedPiece.hasClass('light') === true ? 'light' : 'dark';
 
         incrementMoveCount(color);
-
         //reset the squares to allow moves
         resetMovables();
 
       }
-
     }
 
   });
@@ -151,6 +148,13 @@ $(()=>{
 // MORE FUNCTIONS
 //this function removes the data item with key 'jumpedPieces' from every div.square
 // and removes the class 'movable' from every square
+//checks the currentPosition of the clicked or selected div and returns the coords.
+  function currentPosition(){
+    const position = $(event.target).position();
+    coords = getCoords(position.top,position.left);
+    return coords;
+  }
+
   function resetMovables() {
     $('div.square').removeData('jumpedPieces').removeClass('movable');
   }
@@ -380,8 +384,7 @@ $(()=>{
 
   }
 
-  // TEST pieceSelect()
-  let pieceSelectEnabled = true; //true is switched on state
+
   pieceSelect();// player to select a piece
   // Player change from player 1 to player 2
     //this function allows the players to be changed.
@@ -430,10 +433,7 @@ $(()=>{
     }
   }
 
-
-
-
-
+// WINNING
 //winning conditions: If one player only has their pieces on the board left
 //they win.
   function piecesLeft(){
@@ -449,11 +449,7 @@ $(()=>{
     }
   }
 
-  //resetting the game.
-  $resetButton.on('click', ()=>{
-    reset();
-    // setting up the pieces after emptying them.
-  });
+
 
   //this resets the game by effectively reloading the page from cache
   function reset(){
@@ -466,11 +462,10 @@ $(()=>{
 /*
 
 TODO:
-1. Player change from player 1 to player 2
-2. Reset the game by putting the pieces to the original position
+1. Player change from player 1 to player 2 feature request
+2. Reset the game by putting the pieces to the original position feature requestf
 3. Win conditions, if either player has pieces left on the board while the other doesn't
   then it's a win.
-4.
-
-
+4. Could do more styling to make the game have a smoother feel. (bit vague)
+5. Refactor my code.
 */
