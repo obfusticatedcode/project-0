@@ -23,7 +23,7 @@ footer{
 div#game {
     position:relative;
     margin: 20px auto;
-    width: 30%;
+    width: 400px;
 }
 
 article.instructions{
@@ -35,10 +35,17 @@ article.instructions{
   text-align: left;
   font-family: 'Lato', sans-serif;
   word-spacing: 2px;
+  padding: 20px;
+  width: 800px;
+  margin: 0 auto;
 }
 
 ul{
   list-style: none;
+  padding: 0;
+  li {
+    margin-bottom: 10px;
+  }
 }
 
 div#board {
@@ -149,25 +156,32 @@ div#heading {
     float:right;
 }
 
+.all-buttons {
+  overflow: hidden;
+}
+
 button{
-    display: inline-block;
-    border: 0;
-    color: #F1F1FF;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 20px auto 10px;
-    padding: 10px;
-    background-color: #8b8bff ;
-    box-shadow: 1px 1px 3px #232621;
-    transition: background-color 0.15s linear;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 16px;
-    display: inline-block;
+  border: 0;
+  color: #F1F1FF;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #8b8bff ;
+  box-shadow: 1px 1px 3px #232621;
+  transition: background-color 0.15s linear;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 16px;
+  width: 48%;
+  &:first-of-type {
+    float: left;
+  }
+  &:last-of-type {
+    float: right;
+  }
 }
 
-div#reset-div{
 
-}
 
 .clearfix{
   overflow: hidden;
