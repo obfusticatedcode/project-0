@@ -7,7 +7,7 @@ $(()=>{
   const $board = $('div#board');
   const $pieces = $('div#pieces');
   const $resetButton = $('#reset-button');
-  const $moveCounter = $('#moveCounter');
+
 
   let coords = null;//setting coords globally so it's constantly updating
 
@@ -17,12 +17,11 @@ $(()=>{
   setUpPieces();
   //setting up the darkPieces
   darkPieces();
-  //LIGHT PIECES
   // setting up the lightPieces
   lightPieces();
 
 
-
+  //LIGHT PIECES
   function lightPieces(){
     const $lightPieces = $('div.piece.light');
     //this loop moves all the light pieces to their initial positions
@@ -62,9 +61,8 @@ $(()=>{
 
 
   //EVENTS
-
-
   function pieceSelect(){
+
     if(pieceSelectEnabled === true){
       console.log(pieceSelectEnabled);
       $('div.piece').on('click',(event)=>{
@@ -83,42 +81,19 @@ $(()=>{
     }
   }
 
-  // TEST changing players
-
-
-  // TEST pieceSelect()
-  let pieceSelectEnabled = true; //true is switched on state
-  pieceSelect();// player to select a piece
-  // Player change from player 1 to player 2
-    //this function allows the players to be changed.
-  function incrementMoveCount(color) {
-      //gets the html of the span with id lightMoveCount or darkMoveCount
-      //turns it into a number increments it by one
-      //sets the html of the span with id lightMoveCount or darkMoveCount to the new move count
-    let whichCounter = '';
-    color === 'light' ? whichCounter = '#lightMoveCount' : whichCounter = '#darkMoveCount';
-    let $moves = parseInt($(whichCounter).html());
-    $moves++;
-
-    $(whichCounter).html($moves);
-    console.log($moves);
-    //if the number is even then it's light's move and odd it's dark's move.
-  }//end of incrementMoveCount()
 
   //checks the currentPosition of the clicked or selected div and returns the coords.
   function currentPosition(){
     const position = $(event.target).position();
     coords = getCoords(position.top,position.left);
-    // console.log(coords);//getting the location of the piece
     return coords;
 
   }
 
 
-
   $('div.square').on('click', (e)=>{
+
     currentPosition();//the currentPosition of the square; coords
-    // console.log('coords', coords);
     //turn `e or event` into a jQuery object
     const $pieceToMove = $(e.target);
 
@@ -128,7 +103,6 @@ $(()=>{
 
           //get the piece with the class 'selected'
       const $selectedPiece = $('div.piece.selected');
-
           //only move if there is exactly one selected piece
       if ($selectedPiece.length === 1) {
             //get the index of the square
@@ -152,10 +126,9 @@ $(()=>{
 
         // TEST. testing the winning conditions by checking the number of pieces left on the board
         piecesLeft();
-        
-        //increment the move counter
-        incrementmoveCounter();
 
+        //increment the move counter
+        incrementMoveCounter();
 
         let color = '';
         if ($selectedPiece.hasClass('light') === true) {
@@ -163,6 +136,7 @@ $(()=>{
         } else {
           color = 'dark';
         }
+
         incrementMoveCount(color);
 
         //reset the squares to allow moves
@@ -397,14 +371,46 @@ $(()=>{
 
   }//end of toggleSelect function
 
-  function incrementmoveCounter() {
+  const $moveCounter = $('#moveCounter');
+  function incrementMoveCounter() {
       //gets the html of the span with id moveCounter turns it into a number
       //increments it by one
       //sets the html of the span with id moveCounter
       //to the new move count
-    return  $moveCounter.html(parseInt($('#moveCounter').html(),10)+1);
+    $moveCounter.html(parseInt($moveCounter.html())+1);
 
   }
+
+  // TEST pieceSelect()
+  let pieceSelectEnabled = true; //true is switched on state
+  pieceSelect();// player to select a piece
+  // Player change from player 1 to player 2
+    //this function allows the players to be changed.
+  function incrementMoveCount(color) {
+      //gets the html of the span with id lightMoveCount or darkMoveCount
+      //turns it into a number increments it by one
+      //sets the html of the span with id lightMoveCount or darkMoveCount to the new move count
+    let whichCounter = '';
+    color === 'light' ? whichCounter = '#lightMoveCount' : whichCounter = '#darkMoveCount';
+    let $moves = parseInt($(whichCounter).html());
+    $moves++;
+
+    $(whichCounter).html($moves);
+    console.log($moves);
+    //if the number is even then it's light's move and odd it's dark's move.
+    if ($moves % 2  === 1) {
+      console.log(`Hello odd number`);
+      console.log($darkPieces);
+    } else if($moves % 2 === 0){
+      console.log(`Hello even number`);
+      console.log($lightPieces);
+    }
+  }//end of incrementMoveCount()
+
+  //PLAYER ONE AND PLAYER TWO
+  //If the move count is even, then player one's turn otherwise player two's turn
+  const $lightPieces = $('div.piece.light');
+  const $darkPieces = $('div.piece.dark');
 
 // this function gets the jQuery object stored in
 // the data object of $square under the key 'jumpedPieces'
@@ -425,11 +431,13 @@ $(()=>{
     }
   }
 
+
+
+
+
 //winning conditions: If one player only has their pieces on the board left
 //they win.
   function piecesLeft(){
-    const $lightPieces = $('div.piece.light');
-    const $darkPieces = $('div.piece.dark');
     const darkPieces = $darkPieces.length;
     const lightPieces = $lightPieces.length;
     if (darkPieces === 0) {
@@ -440,7 +448,6 @@ $(()=>{
       //yet to code this function
       return console.log(`It's a draw`);
     }
-
   }
 
   //resetting the game.
