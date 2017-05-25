@@ -20,18 +20,26 @@
   <!-- HEADER -->
   <header id="heading">
     <h1>Checkers</h1>
-    <!-- displaying the moveCounter -->
-    <h4>Total move count: <span id="moveCounter">0</span></h4>
-    <h4>
-      <p>Light Pieces: <span id="lightMoveCount">0</span></p>
-      <p>Dark Pieces: <span id="darkMoveCount">0</span></p>
-    </h4>
+    <!-- displaying the moveCounter and other stats -->
+    <div class="stats">
+      <h4>Total move count: <span id="moveCounter">0</span></h4>
+      <h4>
+        <p>Player One Move Count: <span id="lightMoveCount">0</span></p>
+        <p>Player Two Move Count: <span id="darkMoveCount">0</span></p>
+      </h4>
+    </div>
   </header>
   <!--GAME-->
   <main>
-    <div id="game">
-        <div id="board"></div>
-        <div id="pieces"></div>
+    <div id="wrapper">
+      <div class="instructions">
+        <h3>How to play</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+      <div id="game">
+          <div id="board"></div>
+          <div id="pieces"></div>
+      </div>
     </div>
     <div class="reset">
       <button type="button" id="reset-button">Reset</button>

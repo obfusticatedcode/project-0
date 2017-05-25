@@ -62,7 +62,6 @@ $(()=>{
 
   //EVENTS
   function pieceSelect(){
-
     if(pieceSelectEnabled === true){
       console.log(pieceSelectEnabled);
       $('div.piece').on('click',(event)=>{

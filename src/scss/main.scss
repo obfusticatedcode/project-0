@@ -1,6 +1,8 @@
 //VARIABLES to be defined during 'CSS and chill'
 
 
+
+
 body{
   font-family: 'Source Code Pro', monospace;
   text-align: center;
@@ -74,6 +76,7 @@ div.square.dark {
 }
 
 div#pieces {
+    //keeps the pieces to the board
     position:absolute;
     /* 9 px puts pieces inside of the board's borders;*/
     left:9px;
@@ -112,7 +115,8 @@ div.piece.selected {
 
 div.piece.light {
     background-color: #e4a6ae;
-    border: 1px solid #B93848;
+    border: 3px solid #B93848;
+    border-radius: 50%;
     transition: all 0.2s linear;
     background-repeat: no-repeat;
     background-position: center;
@@ -120,7 +124,8 @@ div.piece.light {
 
 div.piece.dark {
     background-color: #F1F1FF;
-    border: 1px solid #8b8bff;
+    border: 3px solid #8b8bff;
+    border-radius: 50%; 
     transition: all 0.2s linear;//giving that slow glow
     background-repeat: no-repeat;
     background-position: center;
