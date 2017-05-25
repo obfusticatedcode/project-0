@@ -27,9 +27,13 @@ div#game {
 }
 
 article.instructions{
-  font-size: 12px;
+  font-size: 16px;
   background-color: #FFF8F9;
+  display: none;
+  text-align: left;
+  font-family: 'Lato', sans-serif;
 }
+
 ul{
   list-style: none;
 }
@@ -155,7 +159,12 @@ button{
     box-shadow: 1px 1px 3px #232621;
     transition: background-color 0.15s linear;
     font-family: 'Source Code Pro', monospace;
-    font-size: 14px;
+    font-size: 16px;
+    display: inline-block;
+}
+
+div#reset-div{
+
 }
 
 .clearfix{
@@ -178,4 +187,9 @@ div.piece.king {
     -webkit-border-radius:50%;
        -moz-border-radius:50%;
             border-radius:50%;
+}
+
+//ps inside the stats div
+div.stats p{
+  display: none;
 }

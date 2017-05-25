@@ -7,6 +7,7 @@
   <title>Checkers</title>
   <!-- google fonts -->
   <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Source+Code+Pro" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet">
   <!-- page favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="public/images/checkers-favicon.ico">
   <!-- link the jQuery -->
@@ -42,10 +43,18 @@
           <div id="pieces"></div>
       </div>
 
-      <!-- how to play button to reveal the rules -->
-      <div id="rules-div">
-        <button type="button" name="rules" id="rules-button">How To Play</button>
+      <div class="all-buttons">
+        <!-- how to play button to reveal the rules -->
+        <div id="rules-div">
+          <button type="button" name="rules" id="rules-button">How To Play</button>
+        </div>
+
+        <!-- the reset button -->
+        <div id="reset-div">
+          <button type="button" id="reset-button">Reset</button>
+        </div>
       </div>
+
 
       <!-- the rules -->
       <article class="instructions">
@@ -76,12 +85,6 @@
 
     </div>
 
-
-
-    <!-- the reset button -->
-    <div class="reset">
-      <button type="button" id="reset-button">Reset</button>
-    </div>
 
   </main>
 
