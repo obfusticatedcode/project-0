@@ -9,6 +9,7 @@ $(()=>{
   const $resetButton = $('#reset-button');
   const $rulesButton = $('#rules-button');
   const $instructions = $('.instructions');
+  const $winner = $('#winner');
 
 
   let coords = null;//setting coords globally so it's constantly updating
@@ -440,16 +441,18 @@ $(()=>{
     const darkPieces = $darkPieces.length;
     const lightPieces = $lightPieces.length;
     if (darkPieces === 0) {
-      return console.log(`Player 1 wins`);
+      $winner.text(`Player 1 Wins`);
+      return $winner.slideDown(`Player 1 Wins`);
     } else if(lightPieces === 0) {
-      return console.log(`Player 2 wins`);
+      console.log(`Player 2 wins`);
+      return $winner.text(`Player 2 Wins`);
+
     } else if (lightPieces === 1 && darkPieces === 1){//and 40 moves are played afterwards
       //yet to code this function
-      return console.log(`It's a draw`);
+      console.log(`It's a draw`);
+      return $winner.text(`It's a draw`);
     }
   }
-
-
 
   //this resets the game by effectively reloading the page from cache
   function reset(){
