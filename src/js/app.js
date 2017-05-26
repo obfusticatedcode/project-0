@@ -31,7 +31,7 @@ $(()=>{
       // TEST checking the length
       console.log($lightPieces.length);
       //turning the index (from 0 - 11)
-      //into a x,y square coordinate using math
+      //into a x,y square coordinate using maths
       const y = Math.floor(index / 4);
       const x = (index % 4) * 2 + (1 - y%2);
 
@@ -49,7 +49,7 @@ $(()=>{
         //this loop moves all the dark pieces to their initial positions
     $darkPieces.each(function(index,piece) {
         //turning the index (from 0 - 11)
-        //into a x,y square coordinate using math
+        //into a x,y square coordinate using maths
       const y = Math.floor(index/4) + 5;
       const x = (index % 4) * 2 + (1-y%2);
 
@@ -195,7 +195,7 @@ $(()=>{
     //select the occupied ones using the jQuery map() method
     //map creates a new object from an existing one
     //using a translation function
-    var takenSquares = {};
+    const takenSquares = {};
     $('div.piece').each(function(index,piece) {
 
             //this function translates a piece
@@ -427,7 +427,7 @@ $(()=>{
 // if the index refers to an element in the first row or last row,
 // the class 'king' should be added to the $piece
   function checkKing($piece,squareIndex) {
-    for(var i = 0; i < 64; i++){
+    for(let i = 0; i < 64; i++){
       if (squareIndex < 8 || squareIndex >= 56){
         $piece.addClass('king');
       }
