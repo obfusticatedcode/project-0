@@ -15,9 +15,8 @@ Download or clone the repo
 Bringing together all the different technologies to create a web-based checkers game. 
 Play by selecting your piece and clicking on the square you want to move to.
 
-
-[Checkers Board](/Users/obfusticatedcode/Desktop/checkers-screenshot.png)
-[How to play](/Users/obfusticatedcode/Desktop/how-to-play-screenshot.png)
+Screenshots:
+[Checkers Board](http://i.imgur.com/g1puatY.png) and [How to play](http://i.imgur.com/AUogaXG.png)
 
 Live Demo can be found here: [Demo](https://floating-ocean-80084.herokuapp.com/)
 
