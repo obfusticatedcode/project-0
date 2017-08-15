@@ -156,9 +156,11 @@ $(()=>{
     return coords;
   }
 
+
   function resetMovables() {
     $('div.square').removeData('jumpedPieces').removeClass('movable');
   }
+
 
   //function for translating an x,y coordinates to a pixel position
   //the convention is that the square in the upper left corner is at position 0,0
