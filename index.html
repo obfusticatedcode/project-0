@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkers</title>
   <!-- google fonts -->
   <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Source+Code+Pro" rel="stylesheet">
@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="public/css/main.css">
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 </head>
+
 <body>
   <!-- HEADER -->
   <header id="heading">
@@ -41,17 +42,17 @@
 
       <!-- the board and pieces  -->
       <div id="game">
-          <div id="board"></div>
-          <div id="pieces"></div>
+        <div id="board"></div>
+        <div id="pieces"></div>
 
-          <div class="all-buttons">
-            <!-- how to play button to reveal the rules -->
-            <div id="rules-div">
-              <button type="button" name="rules" id="rules-button">How To Play</button>
-              <!-- the reset button -->
-              <button type="button" id="reset-button">Reset</button>
-            </div>
+        <div class="all-buttons">
+          <!-- how to play button to reveal the rules -->
+          <div id="rules-div">
+            <button type="button" name="rules" id="rules-button">How To Play</button>
+            <!-- the reset button -->
+            <button type="button" id="reset-button">Reset</button>
           </div>
+        </div>
       </div>
 
 
@@ -60,30 +61,43 @@
       <!-- the rules -->
       <article class="instructions">
 
-          <h3>How to play</h3>
-          <p>
-            The object of the game is to make it so the opponent can’t move when it comes to their turn.<br>
-             This is done by taking all of their pieces throughout the game, or blocking them so they have nowhere to move. The single draughts can only move in a forward diagonal direction into a square without another piece in it. If an opponent’s piece is in the next square, the player can jump it and capture it, removing the piece from the board. They can only do this if the next square is empty. Players can never jump over their own piece.
-          </p>
-          <p>
-            <ul>
-              <li>The game is played on a 64 square checkerboard with eight rows
-                of alternating dark and light colored squares.
-              </li>
-              <li>
-                There are two players and each player will begin the game with 12 draughts, each player having their own colour. The players will place their draughts on the three rows of dark squares which are closest to them. The players will then begin playing, making one move at a time.
-              </li>
-              <li>
-                When a player makes their way all the way across the board to the other player’s side, their piece will be turned into a “King.” When this happens, one of their previously taken pieces will be put on top of the piece which made it to that side
-              </li>
-              <li>
-                Once a piece is made into a king, it will be able to move forward and backward, giving it more chances to capture the opponents pieces.  A king can jump as many times as it is able to with regards to the necessary squares being unoccupied. However, kings cannot jump over pieces which are the same color as them.
-              </li>
-              <li>
-                As previously mentioned, the game will come to an end once a player can no longer make a move. If both the players can’t move anywhere, the game will end in a tie, or draw. Anyone that wants to play online will be able to find many different gaming sites which allow them to play. They can play against the computer, or play against other online players. There are clubs where players get together in person to compete against each other.
-              </li>
-            </ul>
-          </p>
+        <h3>How to play</h3>
+        <p>
+          The object of the game is to make it so the opponent can’t move when it comes to their turn.<br>
+          This is done by taking all of their pieces throughout the game, or blocking them so they have nowhere to move.
+          The single draughts can only move in a forward diagonal direction into a square without another piece in it.
+          If an opponent’s piece is in the next square, the player can jump it and capture it, removing the piece from
+          the board. They can only do this if the next square is empty. Players can never jump over their own piece.
+        </p>
+        <p>
+        <ul>
+          <li>The game is played on a 64 square checkerboard with eight rows
+            of alternating dark and light colored squares.
+          </li>
+          <li>
+            There are two players and each player will begin the game with 12 draughts, each player having their own
+            colour. The players will place their draughts on the three rows of dark squares which are closest to them.
+            The players will then begin playing, making one move at a time.
+          </li>
+          <li>
+            When a player makes their way all the way across the board to the other player’s side, their piece will be
+            turned into a “King.” When this happens, one of their previously taken pieces will be put on top of the
+            piece which made it to that side
+          </li>
+          <li>
+            Once a piece is made into a king, it will be able to move forward and backward, giving it more chances to
+            capture the opponents pieces. A king can jump as many times as it is able to with regards to the necessary
+            squares being unoccupied. However, kings cannot jump over pieces which are the same color as them.
+          </li>
+          <li>
+            As previously mentioned, the game will come to an end once a player can no longer make a move. If both the
+            players can’t move anywhere, the game will end in a tie, or draw. Anyone that wants to play online will be
+            able to find many different gaming sites which allow them to play. They can play against the computer, or
+            play against other online players. There are clubs where players get together in person to compete against
+            each other.
+          </li>
+        </ul>
+        </p>
       </article>
 
     </div>
@@ -96,4 +110,5 @@
     <p>Made with <span id="copywrite">&hearts;</span> at GA</p>
   </footer>
 </body>
+
 </html>
