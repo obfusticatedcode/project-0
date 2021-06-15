@@ -59,7 +59,7 @@ Init
   or is within bounds
 
   TAKING
-  -If a piece has been jumped/taken, then remove the image it from the board.
+  -If a piece has been jumped/taken, then remove it's image from the board.
 4. Change player turns by removing player1 options/class to play and add player2 options/class
 
 5.If the piece reaches the king row, check if it's player2's king row and within bounds,
