@@ -7,7 +7,6 @@ const browserSync = require('browser-sync').create();
 const notify = require('gulp-notify');
 const plumber = require('gulp-plumber');
 const sourcemaps = require('gulp-sourcemaps');
-const { series } = require('gulp');
 
 function reportError(error) {
   notify({
@@ -44,7 +43,7 @@ function assets() {
 }
 
 function serve() {
-  series(es6, sass)
+  gulp.series(es6, css)
   browserSync.init({
     files: ['public/**/*.*'],
     browser: 'google chrome',
@@ -54,8 +53,10 @@ function serve() {
   });
 }
 
-exports.default = series(css, es6, assets, serve, () => {
+function watch() {
   gulp.watch('src/scss/**/*.scss', ['sass']);
   gulp.watch('src/js/*.js', ['es6']);
   gulp.watch('src/assets/**/*', ['assets']);
-})
+}
+
+exports.default = gulp.series(css, es6, assets, serve, watch)
