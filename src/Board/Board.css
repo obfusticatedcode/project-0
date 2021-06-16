@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   height: 12.5%; 
   width: 12.5%;
   box-shadow: 0 0 0 1px var(--border-color);
@@ -11,13 +10,11 @@
 .Board {
   display: flex;
   align-items: center;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
   justify-content: center;
-  box-shadow: 0 0 0 1px var(--border-color);
+  flex-wrap: wrap;
   height: 720px;
   width: 720px;
+  box-shadow: 0 0 0 1px var(--border-color);
   margin: auto;
 }
 
