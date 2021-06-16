@@ -1,0 +1,14 @@
+
+:root {
+  --black: #040404;
+  --white: #FCF8F8;
+  --border-color: #646464;
+
+  --spacing-md: 8px;
+  --spacing-lg: 16px;
+
+}
+
+.App {
+  padding: var(--spacing-lg);
+}

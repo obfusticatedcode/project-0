@@ -1,11 +1,16 @@
-import * as React from 'react';
+import "./App.css";
 
-export interface AppProps {
-  
-}
- 
+import * as React from "react";
+import { Board } from "./src/Board";
+
+export interface AppProps {}
+
 const App: React.VoidFunctionComponent<AppProps> = () => {
-  return ( <div className="App">Content</div> );
-}
- 
+  return (
+    <div className="App">
+      <Board />
+    </div>
+  );
+};
+
 export default App;
