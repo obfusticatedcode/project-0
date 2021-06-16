@@ -31,7 +31,7 @@ function es6() {
   return gulp.src('src/js/*.js')
     .pipe(plumber({ errorHandler: reportError }))
     .pipe(sourcemaps.init())
-    .pipe(babel({ presets: [["@babel/preset-env", { "targets": "defaults" }]] }))
+    .pipe(babel({ presets: [["@babel/preset-env", { "targets": "defaults" }], "@babel/preset-react"] }))
     .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('public/js'));

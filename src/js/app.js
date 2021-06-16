@@ -3,15 +3,17 @@
 // 2. Unit tests
 // 3. Fix bugs
 // 4. Implement the missing features. 
+//  Implement dragging and dropping pieces
 // 5. Redesign the app
 // 6. Deploy the app
+// 7. Make the board resizable
 
 // start with the board
 // add pieces - each piece will know how to move around the board
 // normal piece and king piece
 // players 1 and 2
 // extras: time controls
-
+// i18next
 // found 21 vulnerabilities (5 low, 11 moderate, 5 high)
 
 
