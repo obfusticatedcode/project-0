@@ -15,7 +15,8 @@
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.6.0",
-    "gulp-uglify": "^2.0.0"
+    "gulp-uglify": "^2.0.0",
+    "trim-newlines": ">=3.0.1"
   },
   "author": "",
   "license": "ISC"
