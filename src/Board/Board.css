@@ -1,12 +1,3 @@
-.Square {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 12.5%; 
-  width: 12.5%;
-  box-shadow: 0 0 0 1px var(--border-color);
-}
-
 .Board {
   display: flex;
   align-items: center;
@@ -16,6 +7,16 @@
   width: 720px;
   box-shadow: 0 0 0 1px var(--border-color);
   margin: auto;
+}
+
+
+.Square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 12.5%; 
+  width: 12.5%;
+  box-shadow: 0 0 0 1px var(--border-color);
 }
 
 .Square.Square--isLight {
