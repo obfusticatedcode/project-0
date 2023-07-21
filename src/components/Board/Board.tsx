@@ -1,31 +1,11 @@
 import "./Board.css";
 
 import * as React from "react";
-
-export interface BoardProps {}
+import Square from "../Square";
 
 type SquareNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 type Board = Array<SquareNumber[]>;
-
-type SquareCoordinate = [number, number];
-
-interface SquareProps extends React.HTMLAttributes<HTMLDivElement> {
-  coordinate: SquareCoordinate;
-  className?: string;
-}
-
-const Square: React.VoidFunctionComponent<SquareProps> = ({
-  coordinate,
-  className,
-  ...props
-}) => {
-  return (
-    <div className={`Square ${className}`} {...props}>
-      <span>{`${coordinate[0]}, ${coordinate[1]}`}</span>
-    </div>
-  );
-};
 
 const board: Board = [
   [0, 1, 2, 3, 4, 5, 6, 7],
@@ -42,7 +22,7 @@ const board: Board = [
 // const a2 = board[0][1] // first row second square
 // const h8 = board[7][7] // last row last square
 
-const Board: React.VoidFunctionComponent<BoardProps> = () => {
+const Board = () => {
   return (
     <div className="Board">
       {board.map((row, rowIndex) =>
