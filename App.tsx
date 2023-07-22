@@ -1,11 +1,9 @@
 import "./App.css";
 
 import * as React from "react";
-import { Board } from "./src/Board";
+import { Board } from "./src/components/Board";
 
-export interface AppProps {}
-
-const App: React.VoidFunctionComponent<AppProps> = () => {
+const App = () => {
   return (
     <div className="App">
       <Board />
