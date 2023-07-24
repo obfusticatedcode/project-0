@@ -23,7 +23,7 @@ const Square = ({
       onClick={() => onClick(coordinate)}
       {...props}
     >
-      <Piece type={pieceType} />
+      <Piece type={pieceType} id={`piece-${coordinate[0]}-${coordinate[1]}`} />
     </div>
   );
 };

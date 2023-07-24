@@ -3,20 +3,19 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  height: 720px;
-  width: 720px;
+  height: 80vw;
+  width: 80vw;
   box-shadow: 0 0 0 1px var(--border-color);
   margin: auto;
   resize: both;
   overflow: auto;
 }
 
-
 .Square {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 12.5%; 
+  height: 12.5%;
   width: 12.5%;
   box-shadow: 0 0 0 1px var(--border-color);
 }
@@ -29,3 +28,34 @@
   color: var(--white);
 }
 
+/* Small mobile devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .Board {
+    height: 60vw;
+    width: 60vw;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .Board {
+    height: 50vw;
+    width: 50vw;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .Board {
+    height: 40vw;
+    width: 40vw;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .Board {
+    height: 30vw;
+    width: 30vw;
+  }
+}
