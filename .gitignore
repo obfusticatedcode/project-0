@@ -1,2 +1,6 @@
 node_modules
 dist
+.env
+# Ignore build artifacts
+public/js/app.js.map
+public/js/app.js

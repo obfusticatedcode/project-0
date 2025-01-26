@@ -1,8 +1,8 @@
 const gulp = require("gulp");
 const babel = require("gulp-babel");
-const sass = require("gulp-sass")(require("sass")); // Dart Sass
+const sass = require("gulp-sass")(require("sass")); // Using Dart Sass
 const cleanCSS = require("gulp-clean-css");
-const uglify = require("gulp-uglify");
+const terser = require("gulp-terser");
 const browserSync = require("browser-sync").create();
 const notify = require("gulp-notify");
 const plumber = require("gulp-plumber");
@@ -24,8 +24,8 @@ function reportError(error) {
 }
 
 /**
- * Compiles SCSS files into minified CSS with sourcemaps.
- * @returns {Stream} - Gulp stream processing SCSS files.
+ * Compiles SCSS files to CSS, applies minification, and writes sourcemaps.
+ * @returns {Stream} - The Gulp stream for SCSS files.
  */
 function css() {
   return gulp
@@ -37,8 +37,8 @@ function css() {
 }
 
 /**
- * Transpiles JavaScript (ES6+) to ES5, minifies, and generates sourcemaps.
- * @returns {Stream} - Gulp stream processing JavaScript files.
+ * Transpiles ES6+ JavaScript to ES5, minifies it, and writes sourcemaps.
+ * @returns {Stream} - The Gulp stream for JavaScript files.
  */
 function es6() {
   return gulp
@@ -52,20 +52,20 @@ function es6() {
         ],
       })
     )
-    .pipe(uglify())
+    .pipe(terser()) // Using gulp-terser for modern JavaScript minification
     .pipe(gulp.dest("public/js", { sourcemaps: "." }));
 }
 
 /**
- * Copies static assets (images, fonts, etc.) to the `public/assets` directory.
- * @returns {Stream} - Gulp stream for static assets.
+ * Copies static assets (e.g., images, fonts) to the `public` directory.
+ * @returns {Stream} - The Gulp stream for asset files.
  */
 function assets() {
   return gulp.src("src/assets/**/*").pipe(gulp.dest("public/assets"));
 }
 
 /**
- * Initializes a local development server with live reload.
+ * Initializes a development server with live reload using BrowserSync.
  * @returns {void}
  */
 function serve() {
@@ -83,7 +83,10 @@ function serve() {
 }
 
 /**
- * Default Gulp task: builds CSS, JS, and assets, then starts the dev server.
+ * The default task that builds CSS, JS, and assets, then starts the server.
  * @returns {void}
  */
-exports.default = gulp.series(gulp.parallel(css, es6, assets), serve);
+exports.default = gulp.series(
+  gulp.parallel(css, es6, assets), // Run CSS, JS, and asset tasks in parallel
+  serve
+);
