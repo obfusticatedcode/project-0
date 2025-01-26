@@ -1,44 +1,46 @@
 const path = require("path");
-const webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // Fixed import
 
 module.exports = {
-  entry: "./src/index.tsx",
-  devtool: "inline-source-map",
   mode: "development",
+  entry: "./src/js/main.js",
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "main.bundle.js", // Match the filename in index.html
+    publicPath: "/dist/",
+  },
   module: {
     rules: [
       {
-        test: /\.(js|jsx|ts|tsx)$/,
-        exclude: /(node_modules)/,
-        loader: "babel-loader",
-        options: {
-          presets: [
-            ["@babel/preset-env"],
-            "@babel/preset-react",
-            ["@babel/preset-typescript", { allowNamespaces: true }],
-          ],
-          plugins: [
-            "@babel/proposal-class-properties",
-            "@babel/proposal-object-rest-spread",
-          ],
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
         },
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
-  resolve: { extensions: ["*", ".js", ".jsx", ".ts", ".tsx", ".css", ".json"] },
-  output: {
-    path: path.resolve(__dirname, "dist/"),
-    publicPath: "/dist/",
-    filename: "bundle.js",
-  },
+  plugins: [
+    new CleanWebpackPlugin(), // Fixed constructor call
+    new MiniCssExtractPlugin({
+      filename: "main.css",
+    }),
+  ],
   devServer: {
-    contentBase: path.join(__dirname, "public/"),
+    static: {
+      directory: path.join(__dirname, ""),
+    },
+    hot: true,
     port: 3000,
-    publicPath: "http://localhost:3000/dist/",
+    open: true,
+    watchFiles: ["src/**/*", "index.html"],
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
 };

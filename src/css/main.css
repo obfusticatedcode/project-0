@@ -1,0 +1,165 @@
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Source Code Pro", monospace;
+  text-align: center;
+  background-color: #e6eaea;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Header */
+h1 {
+  font-size: 38px;
+  margin-bottom: 20px;
+}
+
+.stats {
+  background-color: white;
+  padding: 15px;
+  border-radius: 4px;
+  max-width: 400px;
+  margin: 0 auto 20px;
+}
+
+/* Game layout */
+#game {
+  position: relative;
+  width: 400px;
+  margin: 0 auto;
+}
+
+/* Board */
+#board {
+  width: 400px;
+  height: 400px;
+  border: 10px solid #deb887;
+  border-radius: 4px;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Squares */
+.square {
+  width: 47.5px; /* (400px - 20px border) / 8 squares */
+  height: 47.5px;
+  float: left;
+  position: relative;
+}
+
+.square.light {
+  background-color: #fff;
+}
+
+.square.dark {
+  background-color: #333;
+}
+
+/* Pieces container */
+#pieces {
+  position: absolute;
+  top: 10px; /* Account for border */
+  left: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+}
+
+/* Pieces */
+.piece {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  margin: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.piece.light {
+  background-color: #e4a6ae;
+  border: 3px solid #b93848;
+}
+
+.piece.dark {
+  background-color: #f1f1ff;
+  border: 3px solid #8b8bff;
+}
+
+.piece.selected {
+  box-shadow: 0 0 10px 5px #16a8c7;
+  transform: scale(1.1);
+}
+
+.piece.king:after {
+  content: "♔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #ffd700;
+}
+
+/* Controls */
+.controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #8b8bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #7070ff;
+}
+
+/* Instructions */
+.instructions {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.instructions.hidden {
+  display: none;
+}
+
+.instructions ul {
+  list-style: none;
+  padding: 0;
+}
+
+.instructions li {
+  margin-bottom: 10px;
+}
+
+/* Footer */
+.footer {
+  margin-top: 20px;
+  padding: 10px;
+  color: #666;
+}
+
+/* Utilities */
+.hidden {
+  display: none;
+}

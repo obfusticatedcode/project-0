@@ -1,114 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Checkers Game</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Source+Code+Pro&family=Lato:wght@100;300;400&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/dist/main.css" />
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkers</title>
-  <!-- google fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Source+Code+Pro" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet">
-  <!-- page favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="public/images/checkers-favicon.ico">
-  <!-- link the jQuery -->
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <!-- link the js -->
-  <script src="public/js/app.js" charset="utf-8"></script>
-  <!-- link the scss -->
-  <link rel="stylesheet" href="public/css/main.css">
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-</head>
-
-<body>
-  <!-- HEADER -->
-  <header id="heading">
-    <h1>Checkers</h1>
-    <!-- displaying the moveCounter and other stats -->
-    <div class="stats">
-      <h4>Total move count: <span id="moveCounter">0</span></h4>
-      <h4>
+  <body>
+    <!-- HEADER -->
+    <header id="heading">
+      <h1>Checkers</h1>
+      <section class="stats">
+        <h2>Game Statistics</h2>
+        <p>Total Move Count: <span id="moveCounter">0</span></p>
         <p>Player One Move Count: <span id="lightMoveCount">0</span></p>
         <p>Player Two Move Count: <span id="darkMoveCount">0</span></p>
-      </h4>
-      <h4><span id="winner"></span></h4>
-    </div>
-  </header>
+        <p id="winner" class="hidden" aria-live="polite"></p>
+      </section>
+    </header>
 
-  <!--GAME-->
-  <main>
+    <!-- MAIN CONTENT -->
+    <main>
+      <section id="wrapper">
+        <div id="game">
+          <div id="board" aria-label="Checkers Board" role="grid"></div>
+          <div id="pieces"></div>
 
-    <!-- the rules and the board -->
-    <div id="wrapper">
-
-      <!-- the board and pieces  -->
-      <div id="game">
-        <div id="board"></div>
-        <div id="pieces"></div>
-
-        <div class="all-buttons">
-          <!-- how to play button to reveal the rules -->
-          <div id="rules-div">
-            <button type="button" name="rules" id="rules-button">How To Play</button>
-            <!-- the reset button -->
-            <button type="button" id="reset-button">Reset</button>
+          <div class="controls">
+            <button
+              id="rules-button"
+              type="button"
+              aria-expanded="false"
+              aria-controls="instructions"
+            >
+              How To Play
+            </button>
+            <button id="reset-button" type="button">Reset</button>
           </div>
         </div>
-      </div>
 
+        <!-- Game Rules -->
+        <article id="instructions" class="instructions hidden">
+          <h2>How to Play Checkers</h2>
+          <p>
+            The objective of the game is to block your opponent from making any
+            legal moves or to capture all of their pieces. Here are the rules:
+          </p>
+          <ul>
+            <li>
+              The game is played on an 8x8 checkerboard with alternating light
+              and dark squares. Only the dark squares are used.
+            </li>
+            <li>
+              Each player starts with 12 pieces placed on their first three rows
+              of dark squares.
+            </li>
+            <li>Pieces move diagonally forward into an unoccupied square.</li>
+            <li>
+              If an opponent's piece is diagonally adjacent and the square
+              beyond it is empty, the piece can jump over the opponent's piece,
+              capturing it. Multiple jumps are allowed if the conditions are
+              met.
+            </li>
+            <li>
+              When a piece reaches the last row of the opponent's side, it
+              becomes a "King." Kings can move both forward and backward
+              diagonally.
+            </li>
+            <li>
+              The game ends when a player cannot make any legal moves or all
+              their pieces are captured.
+            </li>
+            <li>If neither player can move or capture, the game is a draw.</li>
+          </ul>
+          <p>Good luck and have fun!</p>
+        </article>
+      </section>
+    </main>
 
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>Made with <span aria-label="love">&hearts;</span> at GA</p>
+    </footer>
 
-
-      <!-- the rules -->
-      <article class="instructions">
-
-        <h3>How to play</h3>
-        <p>
-          The object of the game is to make it so the opponent can’t move when it comes to their turn.<br>
-          This is done by taking all of their pieces throughout the game, or blocking them so they have nowhere to move.
-          The single draughts can only move in a forward diagonal direction into a square without another piece in it.
-          If an opponent’s piece is in the next square, the player can jump it and capture it, removing the piece from
-          the board. They can only do this if the next square is empty. Players can never jump over their own piece.
-        </p>
-        <p>
-        <ul>
-          <li>The game is played on a 64 square checkerboard with eight rows
-            of alternating dark and light colored squares.
-          </li>
-          <li>
-            There are two players and each player will begin the game with 12 draughts, each player having their own
-            colour. The players will place their draughts on the three rows of dark squares which are closest to them.
-            The players will then begin playing, making one move at a time.
-          </li>
-          <li>
-            When a player makes their way all the way across the board to the other player’s side, their piece will be
-            turned into a “King.” When this happens, one of their previously taken pieces will be put on top of the
-            piece which made it to that side
-          </li>
-          <li>
-            Once a piece is made into a king, it will be able to move forward and backward, giving it more chances to
-            capture the opponents pieces. A king can jump as many times as it is able to with regards to the necessary
-            squares being unoccupied. However, kings cannot jump over pieces which are the same color as them.
-          </li>
-          <li>
-            As previously mentioned, the game will come to an end once a player can no longer make a move. If both the
-            players can’t move anywhere, the game will end in a tie, or draw. Anyone that wants to play online will be
-            able to find many different gaming sites which allow them to play. They can play against the computer, or
-            play against other online players. There are clubs where players get together in person to compete against
-            each other.
-          </li>
-        </ul>
-        </p>
-      </article>
-
-    </div>
-
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer clearfix">
-    <p>Made with <span id="copywrite">&hearts;</span> at GA</p>
-  </footer>
-</body>
-
+    <!-- Scripts -->
+    <script type="module" src="/dist/main.bundle.js"></script>
+  </body>
 </html>
